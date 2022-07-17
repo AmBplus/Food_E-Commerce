@@ -4,9 +4,11 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+string connection = builder.Configuration.GetConnectionString("SqlServerConnection"); 
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<FECommerceContext>(op => op.UseSqlServer("SqlServerConnection"));
+builder.Services.AddDbContext<FECommerceContext>
+(op => op.UseSqlServer(connection, 
+    b => b.MigrationsAssembly("F-e-commerce-UI")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
