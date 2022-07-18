@@ -1,0 +1,11 @@
+﻿<script>
+    var TempToast = document.getElementById("TempToast");
+    var option = {
+        animation: true,
+        delay : 2000 
+    }
+    var bsAlert = new bootstrap.Toast(TempToast,option);
+    setTimeout(function() {
+        bsAlert.show();
+    }, 500);
+</script>

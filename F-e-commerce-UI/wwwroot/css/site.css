@@ -16,3 +16,19 @@ html {
 body {
   margin-bottom: 60px;
 }
+.Abtn-primary {
+    background-color: #0d6efd !important;
+}
+.Abtn-Gray {
+    background-color: #373a40 !important;
+}
+.Abgn-Dark {
+    background-color: #212121;
+}
+.bottom-15 {
+    bottom: 15% !important
+}
+.start-8{
+    left: 8% !important
+}
+
