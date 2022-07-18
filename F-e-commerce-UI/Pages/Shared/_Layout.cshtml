@@ -22,16 +22,18 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="@PageAddress.Home">@PageWords.Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link text-light" asp-area="" asp-page="@PageAddress.MainPrivacy">@PageWords.Privacy</a>
                         </li>
                     
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-page="Admin/Categories/Index">Category</a>
+                                <a class="dropdown-item" asp-page="@PageAddress.AdminCategoryMain">@PageWords.CategoryManagement</a>
+                                <a class="dropdown-item" asp-page="@PageAddress.AdminFoodMain">@PageWords.FoodManagement</a>
+
                             </div>
                         </li>
                     </ul>
@@ -47,7 +49,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - F_e_commerce_UI - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2022 - F_e_commerce_UI - <a asp-area="" asp-page="@PageAddress.MainPrivacy">@PageWords.Privacy</a>
         </div>
     </footer>
 

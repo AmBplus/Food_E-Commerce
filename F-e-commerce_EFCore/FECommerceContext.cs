@@ -8,5 +8,7 @@ public class FECommerceContext : DbContext
     public FECommerceContext(DbContextOptions<FECommerceContext> options) : base(options)
     {
     }
-    public DbSet<Category> Category { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<FoodType> FoodTypes { get; set; }
+    
 }

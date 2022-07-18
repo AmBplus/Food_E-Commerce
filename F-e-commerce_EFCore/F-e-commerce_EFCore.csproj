@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\F-e-commerce-Constants\F-e-commerce-Constants.csproj" />
   </ItemGroup>
 
 </Project>

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace F_e_commerce_UI.Pages.Admin.Categories
+namespace F_e_commerce_UI.Pages.Admin.FoodTypes
 {
     public class EditModel : PageModel
     {
@@ -17,7 +17,7 @@ namespace F_e_commerce_UI.Pages.Admin.Categories
         // instance of database
         private FECommerceContext _commerceContext { get; set; }
         // Instance of category
-        [BindProperty]public Category Category { get; set; }
+        [BindProperty]public FoodType FoodType { get; set; }
         // ViewData Of Result
         [TempData]
         public string ResultStatus { get; set; }
@@ -25,8 +25,8 @@ namespace F_e_commerce_UI.Pages.Admin.Categories
         public async Task<IActionResult> OnGet(int id)
         {
             if(string.IsNullOrWhiteSpace(id.ToString())) return RedirectToPage("index");
-            Category = await _commerceContext.Categories.FirstOrDefaultAsync(x => x.Id == id);
-            if(Category != null) 
+            FoodType = await _commerceContext.FoodTypes.FirstOrDefaultAsync(x => x.Id == id);
+            if(FoodType != null) 
             return Page();
             return RedirectToPage("index");
         }
@@ -37,9 +37,9 @@ namespace F_e_commerce_UI.Pages.Admin.Categories
             if (ModelState.IsValid)
             {
            
-                 _commerceContext.Categories.Update(Category);
+                 _commerceContext.FoodTypes.Update(FoodType);
                 await _commerceContext.SaveChangesAsync();
-                ResultStatus = $"Categories {Category.Name} Updated ";
+                ResultStatus = $"FoodTypes {FoodType.Name} Updated ";
                 return RedirectToPage("index", routeValues: ResultStatus);
             }
             return Page();

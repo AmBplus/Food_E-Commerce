@@ -8,7 +8,7 @@ string connection = builder.Configuration.GetConnectionString("SqlServerConnecti
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<FECommerceContext>
 (op => op.UseSqlServer(connection, 
-    b => b.MigrationsAssembly("F-e-commerce-UI")));
+    b => b.MigrationsAssembly("F-e-commerce_EFCore")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

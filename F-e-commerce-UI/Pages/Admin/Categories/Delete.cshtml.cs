@@ -25,7 +25,7 @@ namespace F_e_commerce_UI.Pages.Admin.Categories
         public async Task<IActionResult> OnGet(int id)
         {
             if (string.IsNullOrWhiteSpace(id.ToString())) return RedirectToPage("index");
-            Category = await _commerceContext.Category.FirstOrDefaultAsync(x => x.Id == id);
+            Category = await _commerceContext.Categories.FirstOrDefaultAsync(x => x.Id == id);
             if (Category != null)
                 return Page();
             return RedirectToPage("index");
@@ -33,9 +33,9 @@ namespace F_e_commerce_UI.Pages.Admin.Categories
 
         public async Task<IActionResult> OnPost()
         {
-            _commerceContext.Category.Remove(Category);
+            _commerceContext.Categories.Remove(Category);
                 await _commerceContext.SaveChangesAsync();
-                ResultStatus = $"Category   Deleted";
+                ResultStatus = $"Categories   Deleted";
                 return RedirectToPage("index", routeValues: ResultStatus);
         }
     }

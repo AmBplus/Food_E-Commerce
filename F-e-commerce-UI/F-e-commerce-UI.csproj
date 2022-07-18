@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\F-e-commerce_EFCore\F-e-commerce_EFCore.csproj" />
+    <ProjectReference Include="..\F-e-Resources\F-e-Resources.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +31,10 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Pages\Shared\_SucceddToastScript.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Customer\" />
   </ItemGroup>
 
 </Project>

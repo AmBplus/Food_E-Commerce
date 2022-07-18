@@ -6,7 +6,7 @@
     <div class="row pt-3">
        <partial name="Shared/_SucceddToastHC"/>
         <div class="col-6">
-            <h2 class="text-primary">Categories List</h2>
+            <h2 class="text-primary">FoodTypes List</h2>
         </div>
         <div class="col-6 text-end">
             <a asp-page="Create" class="btn btn-primary"><i class="bi bi-plus-square"></i> &nbsp;Create</a>
@@ -15,16 +15,15 @@
             <thead>
             <tr>
                 <th>@PageWords.Name</th>
-                <th>@PageWords.DisplayOrder</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            @foreach (var obj in @Model._category)
+            @foreach (var obj in @Model._FoodTypes)
             {
                 <tr>
                     <td class="col-6">@obj.Name</td>
-                    <td class="col-4">@obj.DisplayOrder</td>
+                   
                     <td class="col-2">
                         <div class="w-50 btn-group" role="group">
                             <a asp-route-id="@obj.Id" asp-page="Edit" class="btn btn-warning mx-2"><i class="bi bi-pencil-square"></i></a>
