@@ -61,7 +61,7 @@ namespace F_e_Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Admin/Categories/Delete.
+        ///   Looks up a localized string similar to /Admin/Categories/Delete.
         /// </summary>
         public static string AdminCategoryDelete {
             get {
@@ -70,7 +70,7 @@ namespace F_e_Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Admin/Categories/Edit.
+        ///   Looks up a localized string similar to /Admin/Categories/Edit.
         /// </summary>
         public static string AdminCategoryEdit {
             get {
@@ -79,7 +79,7 @@ namespace F_e_Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Admin/Categories/Index.
+        ///   Looks up a localized string similar to /Admin/Categories/Index.
         /// </summary>
         public static string AdminCategoryMain {
             get {
@@ -88,7 +88,7 @@ namespace F_e_Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Admin/FoodTypes/Delete.
+        ///   Looks up a localized string similar to /Admin/FoodTypes/Delete.
         /// </summary>
         public static string AdminFoodDelete {
             get {
@@ -97,7 +97,7 @@ namespace F_e_Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Admin/FoodTypes/Edit.
+        ///   Looks up a localized string similar to /Admin/FoodTypes/Edit.
         /// </summary>
         public static string AdminFoodEdit {
             get {
@@ -106,7 +106,7 @@ namespace F_e_Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Admin/FoodTypes/Index.
+        ///   Looks up a localized string similar to /Admin/FoodTypes/Index.
         /// </summary>
         public static string AdminFoodMain {
             get {

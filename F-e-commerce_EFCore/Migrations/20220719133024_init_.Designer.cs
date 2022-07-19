@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace F_e_commerce_EFCore.Migrations
 {
     [DbContext(typeof(FECommerceContext))]
-    [Migration("20220718215443_init_foodTypesModelAndPages")]
-    partial class init_foodTypesModelAndPages
+    [Migration("20220719133024_init_")]
+    partial class init_
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

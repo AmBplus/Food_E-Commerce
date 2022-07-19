@@ -1,4 +1,5 @@
 using F_e_commerce_EFCore;
+using F_e_commerce_EFCore.IUnitOfWorks;
 using F_e_commerce_EFCore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,15 +10,15 @@ namespace F_e_commerce_UI.Pages.Admin.FoodTypes
     public class EditModel : PageModel
     {
         // ctor
-        public EditModel(FECommerceContext commerceContext)
+        public EditModel(IUnitOfWork commerceContext)
         {
             _commerceContext = commerceContext;
         }
         // properties
         // instance of database
-        private FECommerceContext _commerceContext { get; set; }
+        private IUnitOfWork _commerceContext { get; set; }
         // Instance of category
-        [BindProperty]public FoodType FoodType { get; set; }
+        [BindProperty]public FoodType? FoodType { get; set; }
         // ViewData Of Result
         [TempData]
         public string ResultStatus { get; set; }
@@ -25,7 +26,7 @@ namespace F_e_commerce_UI.Pages.Admin.FoodTypes
         public async Task<IActionResult> OnGet(int id)
         {
             if(string.IsNullOrWhiteSpace(id.ToString())) return RedirectToPage("index");
-            FoodType = await _commerceContext.FoodTypes.FirstOrDefaultAsync(x => x.Id == id);
+            FoodType = await _commerceContext.FoodTypes.GetByAsync(x => x.Id == id);
             if(FoodType != null) 
             return Page();
             return RedirectToPage("index");
@@ -33,12 +34,11 @@ namespace F_e_commerce_UI.Pages.Admin.FoodTypes
 
         public async Task<IActionResult> OnPost()
         {
-            
             if (ModelState.IsValid)
             {
-           
-                 _commerceContext.FoodTypes.Update(FoodType);
+                _commerceContext.FoodTypes.Update(FoodType!);
                 await _commerceContext.SaveChangesAsync();
+                _commerceContext.Dispose();
                 ResultStatus = $"FoodTypes {FoodType.Name} Updated ";
                 return RedirectToPage("index", routeValues: ResultStatus);
             }

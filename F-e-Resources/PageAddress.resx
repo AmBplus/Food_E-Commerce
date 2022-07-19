@@ -118,22 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AdminCategoryDelete" xml:space="preserve">
-    <value>Admin/Categories/Delete</value>
+    <value>/Admin/Categories/Delete</value>
   </data>
   <data name="AdminCategoryEdit" xml:space="preserve">
-    <value>Admin/Categories/Edit</value>
+    <value>/Admin/Categories/Edit</value>
   </data>
   <data name="AdminCategoryMain" xml:space="preserve">
-    <value>Admin/Categories/Index</value>
+    <value>/Admin/Categories/Index</value>
   </data>
   <data name="AdminFoodDelete" xml:space="preserve">
-    <value>Admin/FoodTypes/Delete</value>
+    <value>/Admin/FoodTypes/Delete</value>
   </data>
   <data name="AdminFoodEdit" xml:space="preserve">
-    <value>Admin/FoodTypes/Edit</value>
+    <value>/Admin/FoodTypes/Edit</value>
   </data>
   <data name="AdminFoodMain" xml:space="preserve">
-    <value>Admin/FoodTypes/Index</value>
+    <value>/Admin/FoodTypes/Index</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>/Index</value>

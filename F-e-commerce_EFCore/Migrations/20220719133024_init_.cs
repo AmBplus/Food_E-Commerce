@@ -4,7 +4,7 @@
 
 namespace F_e_commerce_EFCore.Migrations
 {
-    public partial class init_foodTypesModelAndPages : Migration
+    public partial class init_ : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
