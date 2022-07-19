@@ -1,0 +1,2 @@
+﻿namespace Services.Common.Abstract;
+

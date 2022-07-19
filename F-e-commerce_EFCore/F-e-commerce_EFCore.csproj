@@ -19,6 +19,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\F-e-commerce-Constants\F-e-commerce-Constants.csproj" />
+    <ProjectReference Include="..\F-e-Resources\F-e-Resources.csproj" />
+    <ProjectReference Include="..\Services.Common.Abstract\Services.Common.Abstract.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repository\CategoryRepository\" />
   </ItemGroup>
 
 </Project>
