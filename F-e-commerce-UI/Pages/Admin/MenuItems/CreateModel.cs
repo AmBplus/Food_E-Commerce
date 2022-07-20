@@ -8,13 +8,13 @@ namespace F_e_commerce_UI.Pages.Admin.MenuItems
     public class CreateModel : PageModel
     {
         // ctor
-        public CreateModel(IUnitOfWork commerceContext)
+        public CreateModel(IUnitOfWorkEF commerceContext)
         {
             _commerceContext = commerceContext;
         }
         // properties
         // instance of database
-        private IUnitOfWork _commerceContext { get;}
+        private IUnitOfWorkEF _commerceContext { get;}
         // Instance of category
         [BindProperty] public FoodType FoodTypes { get; set; }
         // ViewData Of Result

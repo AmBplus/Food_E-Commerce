@@ -14,7 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<FECommerceContext>
 (op => op.UseSqlServer(connection, 
     b => b.MigrationsAssembly("F-e-commerce_EFCore")));
-builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<IUnitOfWorkEF, UnitOfWorkEF>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

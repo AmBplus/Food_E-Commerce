@@ -1,18 +1,15 @@
 ﻿using F_e_commerce_EFCore.IUnitOfWorks;
 using F_e_commerce_EFCore.Repository.CategoryRepository;
 using F_e_commerce_EFCore.Repository.FoodRepository;
-
 namespace F_e_commerce_EFCore.UnitOfWorks;
 
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWorkEF : IUnitOfWorkEF
 {
     FECommerceContext Context;
 
-    public UnitOfWork(FECommerceContext context) :base()
+    public UnitOfWorkEF(FECommerceContext context) :base()
     {
         Context = context;
-        //Categories = new CategoryRepository(context);
-        //FoodTypes = new FoodTypeRepository(context);
     }
     private ICategoryRepository? _CategoryRepository { get; set; }
     private IFoodTypeRepository? _FoodTypeRepository { get; set; }

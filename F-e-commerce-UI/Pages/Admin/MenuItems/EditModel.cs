@@ -8,13 +8,13 @@ namespace F_e_commerce_UI.Pages.Admin.MenuItems
     public class EditModel : PageModel
     {
         // ctor
-        public EditModel(IUnitOfWork commerceContext)
+        public EditModel(IUnitOfWorkEF commerceContext)
         {
             _commerceContext = commerceContext;
         }
         // properties
         // instance of database
-        private IUnitOfWork _commerceContext { get; set; }
+        private IUnitOfWorkEF _commerceContext { get; set; }
         // Instance of category
         [BindProperty]public FoodType? FoodType { get; set; }
         // ViewData Of Result

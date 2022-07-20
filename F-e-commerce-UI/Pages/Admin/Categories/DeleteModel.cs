@@ -11,13 +11,13 @@ namespace F_e_commerce_UI.Pages.Admin.Categories
     public class DeleteModel : PageModel
     {
         // ctor
-        public DeleteModel(IUnitOfWork commerceContext)
+        public DeleteModel(IUnitOfWorkEF commerceContext)
         {
             _commerceContext = commerceContext;
         }
         // properties
         // instance of database
-        private IUnitOfWork _commerceContext { get; set; }
+        private IUnitOfWorkEF _commerceContext { get; set; }
         // Instance of category
         [BindProperty] public Category Category { get; set; }
         // ViewData Of Result

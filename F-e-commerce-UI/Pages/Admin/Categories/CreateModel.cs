@@ -10,13 +10,13 @@ namespace F_e_commerce_UI.Pages.Admin.Categories
     public class CreateModel : PageModel
     {
         // ctor
-        public CreateModel(IUnitOfWork commerceContext)
+        public CreateModel(IUnitOfWorkEF commerceContext)
         {
             _commerceContext = commerceContext;
         }
         // properties
         // instance of database
-        private IUnitOfWork _commerceContext { get;}
+        private IUnitOfWorkEF _commerceContext { get;}
         // Instance of category
         [BindProperty] public Category Category { get; set; }
         // ViewData Of Result
@@ -39,6 +39,7 @@ namespace F_e_commerce_UI.Pages.Admin.Categories
 
                 Category category = new Category();
                 category.Name = Category.Name;
+                category.DisplayOrder = Category.DisplayOrder;
                 await _commerceContext.Categories.AddAsync(category);
                 await _commerceContext.SaveChangesAsync();
                 ResultStatus = $"Categories {Category.Name} Created";
