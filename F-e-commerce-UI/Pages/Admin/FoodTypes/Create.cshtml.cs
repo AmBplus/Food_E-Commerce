@@ -1,5 +1,6 @@
 using F_e_commerce_EFCore;
 using F_e_commerce_EFCore.IUnitOfWorks;
+using F_e_commerce_EFCore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -34,9 +35,13 @@ namespace F_e_commerce_UI.Pages.Admin.FoodTypes
                     ModelState.AddModelError("", "Duplicated FoodTypes");
                     return Page();
                 }
-                await _commerceContext.FoodTypes.AddAsync(FoodTypes);
-                await _commerceContext.SaveChangesAsync();
-                _commerceContext.Dispose();
+
+                FoodType CreatefoodTypes = new FoodType();
+                CreatefoodTypes.Name = FoodTypes.Name;
+               // await _commerceContext.BeginTrans();
+                await _commerceContext.FoodTypes.AddAsync(CreatefoodTypes);
+               // await _commerceContext.CommitTrans();
+               await _commerceContext.SaveChangesAsync();
                 ResultStatus = $"FoodTypes {FoodTypes.Name} Created";
                 return RedirectToPage("index",routeValues: ResultStatus);
             }

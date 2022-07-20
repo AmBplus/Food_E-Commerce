@@ -117,5 +117,25 @@ namespace F_e_commerce_EFCore.Repository;
     {
         return await DbSet.AnyAsync(filter);
     }
+
+    private bool IsDisposed = false;
+
+    public void Dispose()
+    { 
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    private void Dispose(bool flag)
+    {
+        if (!IsDisposed)
+        {
+            if (flag)
+            {
+                Context.Dispose();
+                IsDisposed = true;
+            }
+        }
+    }
 }
 

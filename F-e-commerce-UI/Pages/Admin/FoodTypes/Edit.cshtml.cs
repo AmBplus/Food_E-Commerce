@@ -36,9 +36,9 @@ namespace F_e_commerce_UI.Pages.Admin.FoodTypes
         {
             if (ModelState.IsValid)
             {
+                await _commerceContext.BeginTrans();
                 _commerceContext.FoodTypes.Update(FoodType!);
-                await _commerceContext.SaveChangesAsync();
-                _commerceContext.Dispose();
+                await _commerceContext.CommitTrans();
                 ResultStatus = $"FoodTypes {FoodType.Name} Updated ";
                 return RedirectToPage("index", routeValues: ResultStatus);
             }

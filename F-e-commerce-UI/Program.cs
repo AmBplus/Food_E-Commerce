@@ -13,8 +13,6 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<FECommerceContext>
 (op => op.UseSqlServer(connection, 
     b => b.MigrationsAssembly("F-e-commerce_EFCore")));
-builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
-builder.Services.AddTransient<IFoodTypeRepository, FoodTypeRepository>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 var app = builder.Build();
 

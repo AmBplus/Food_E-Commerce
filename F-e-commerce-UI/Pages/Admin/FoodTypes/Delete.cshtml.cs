@@ -34,9 +34,9 @@ namespace F_e_commerce_UI.Pages.Admin.FoodTypes
 
         public async Task<IActionResult> OnPost()
         {
+            await _commerceContext.BeginTrans();
             _commerceContext.FoodTypes.Remove(FoodType);
-            await _commerceContext.SaveChangesAsync();
-            _commerceContext.Dispose();
+            await _commerceContext.CommitTrans();
             ResultStatus = $"FoodTypes   Deleted";
             return RedirectToPage("index", routeValues: ResultStatus);
         }

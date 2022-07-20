@@ -1,4 +1,5 @@
 using F_e_commerce_EFCore;
+using F_e_commerce_EFCore.IUnitOfWorks;
 using F_e_commerce_EFCore.Models;
 using F_e_commerce_EFCore.Repository.CategoryRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -10,15 +11,15 @@ namespace F_e_commerce_UI.Pages.Admin.Categories
     public class DeleteModel : PageModel
     {
         // ctor
-        public DeleteModel(ICategoryRepository commerceContext)
+        public DeleteModel(IUnitOfWork commerceContext)
         {
             _commerceContext = commerceContext;
         }
         // properties
         // instance of database
-        private ICategoryRepository _commerceContext { get; set; }
+        private IUnitOfWork _commerceContext { get; set; }
         // Instance of category
-        [BindProperty] public Category? Category { get; set; }
+        [BindProperty] public Category Category { get; set; }
         // ViewData Of Result
         [TempData]
         public string ResultStatus { get; set; }
@@ -26,7 +27,7 @@ namespace F_e_commerce_UI.Pages.Admin.Categories
         public async Task<IActionResult> OnGet(int id)
         {
             if (string.IsNullOrWhiteSpace(id.ToString())) return RedirectToPage("index");
-            Category = await _commerceContext.GetByAsync(x => x.Id == id);
+            Category = await _commerceContext.Categories.GetByAsync(x => x.Id == id);
             if (Category != null)
                 return Page();
             return RedirectToPage("index");
@@ -35,8 +36,9 @@ namespace F_e_commerce_UI.Pages.Admin.Categories
         public async Task<IActionResult> OnPost()
         {
             if(!ModelState.IsValid) return Page();
-                _commerceContext.Remove(Category!);
-                await _commerceContext.SaveChangesAsync();
+                await _commerceContext.BeginTrans();
+                _commerceContext.Categories.Remove(Category!);
+                await _commerceContext.CommitTrans();
                 ResultStatus = $"Categories   Deleted";
                 return RedirectToPage("index", routeValues: ResultStatus);
         }

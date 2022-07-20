@@ -21,7 +21,9 @@ public class FoodTypeRepository: Repository<FoodType> , IFoodTypeRepository
             message = string.Format(Messages.CantFindDatabaseMessage, nameof(FoodType));
             return ViewResult.GetViewResultFailed(message);
         }
-        Context.Update(entity);
+
+        entityInDataBase.Name = entity.Name;
+        Context.Update(entityInDataBase);
         message = string.Format(Messages.UpdatedFromDatabaseMessage, nameof(FoodType));
         return ViewResult.GetViewResultSucceed(message);
     }
@@ -29,12 +31,13 @@ public class FoodTypeRepository: Repository<FoodType> , IFoodTypeRepository
     public async Task<ViewResult> UpdateAsync(FoodType entity)
     {
         string message;
-        var entityInDataBase = GetByAsync(entity.Id);
+        var entityInDataBase = await GetByAsync(entity.Id);
         if (entityInDataBase == null)
         {
             message = string.Format(Messages.CantFindDatabaseMessage, nameof(FoodType));
             return ViewResult.GetViewResultFailed(message);
         }
+        entityInDataBase.Name= entity.Name;
         Context.Update(entity);
         message = string.Format(Messages.UpdatedFromDatabaseMessage, nameof(FoodType));
         return ViewResult.GetViewResultSucceed(message);

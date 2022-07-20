@@ -4,7 +4,7 @@ using Services.Common.Abstract;
 
 namespace F_e_commerce_EFCore.IRepository;
 
-public interface IRepository<T>
+public interface IRepository<T> : IDisposable
 {
     ViewResult Add(T entity);
     ViewResult Remove(T entity);

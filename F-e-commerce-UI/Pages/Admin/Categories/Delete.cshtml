@@ -24,7 +24,9 @@
             </tbody>
         </table>
         <div>
-            <form method="post" class="col-2 text-center">
+            <form method="POST" class="col-2 text-center">
+                <input type="hidden" asp-for="Category.DisplayOrder"/>
+                <input type="hidden" asp-for="Category.Name"/>
                 <input type="hidden" asp-for="Category.Id"/>
                 <button type="submit" class="btn btn-danger form-control"><i class="bi-trash-fill"></i>&nbsp; Delete</button>
             </form>

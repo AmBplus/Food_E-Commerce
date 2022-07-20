@@ -5,8 +5,12 @@ namespace F_e_commerce_EFCore.IUnitOfWorks;
 
 public interface IUnitOfWork : IDisposable
 {
-    ICategoryRepository Categories { get; }
+    ICategoryRepository Categories { get;}
     IFoodTypeRepository FoodTypes { get; }
+    Task BeginTrans();
+    Task CommitTrans();
+    Task RollBack();
+    bool IsDisposed { get; }
     Task SaveChangesAsync();
     void SaveChanges();
 }

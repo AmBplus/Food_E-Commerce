@@ -20,7 +20,9 @@ public class CategoryRepository : Repository<Category>, ICategoryRepository
             message = string.Format(Messages.CantFindDatabaseMessage, nameof(category));
             return ViewResult.GetViewResultFailed(message);
         }
-        Context.Update(category);
+        Category.Name = category.Name;
+        Category.DisplayOrder = category.DisplayOrder;
+        Context.Update(Category);
         message = string.Format(Messages.UpdatedFromDatabaseMessage, nameof(category));
         return ViewResult.GetViewResultSucceed(message);
 
@@ -29,13 +31,15 @@ public class CategoryRepository : Repository<Category>, ICategoryRepository
     public async Task<ViewResult> UpdateAsync(Category category)
     {
         string message;
-        var findCategory =  GetByAsync(category.Id);
+        var findCategory = await GetByAsync(category.Id);
         if (category == null)
         {
             message = string.Format(Messages.CantFindDatabaseMessage, nameof(category));
             return  ViewResult.GetViewResultFailed(message);
         }
-        Context.Update(category);
+        findCategory.Name = category.Name;
+        findCategory.DisplayOrder = category.DisplayOrder;
+        Context.Update(findCategory);
         message = string.Format(Messages.UpdatedFromDatabaseMessage, nameof(category));
         return ViewResult.GetViewResultSucceed(message);
     }
