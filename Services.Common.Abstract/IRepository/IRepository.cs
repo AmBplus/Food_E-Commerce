@@ -1,8 +1,6 @@
 ﻿using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using Services.Common.Abstract;
 
-namespace F_e_commerce_EFCore.IRepository;
+namespace Services.Common.Abstract.IRepository;
 
 public interface IRepository<T> : IDisposable
 {

@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
-using F_e_commerce_EFCore.IRepository;
 using F_e_Resources;
 using Microsoft.EntityFrameworkCore;
 using Services.Common.Abstract;
+using Services.Common.Abstract.IRepository;
 
 namespace F_e_commerce_EFCore.Repository;
 
