@@ -1,0 +1,23 @@
+﻿@page
+@model CreateModel
+@{
+}
+<div class="container">
+    <div class="row">
+        <form method="POST">
+            <div class="border p-3 mt-4">
+                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                <label asp-for="FoodTypes.Name" class="col-6 m-2 form-label"></label><br/>
+                <input asp-for="FoodTypes.Name" class="col-6 m-2 form-control"/>
+                <span class="text-danger" asp-validation-for="FoodTypes.Name"></span> <br/>
+                <input type="submit" class="btn btn-success  m-2" value="Create"/>
+                    <a asp-page="index" class="btn btn-primary my-2">Back To List</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts
+{
+    <partial name="Shared/_ValidationScriptsPartial"/>
+}

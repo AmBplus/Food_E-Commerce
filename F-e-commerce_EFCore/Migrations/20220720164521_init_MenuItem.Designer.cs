@@ -3,6 +3,7 @@ using F_e_commerce_EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace F_e_commerce_EFCore.Migrations
 {
     [DbContext(typeof(FECommerceContext))]
-    partial class FECommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20220720164521_init_MenuItem")]
+    partial class init_MenuItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,13 +103,13 @@ namespace F_e_commerce_EFCore.Migrations
                     b.HasOne("Domain.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("ForeignKeyCategory")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Models.FoodType", "FoodType")
                         .WithMany()
                         .HasForeignKey("ForeignKeyFoodType")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");

@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 string connection = builder.Configuration.GetConnectionString("SqlServerConnection"); 
 builder.Services.AddRazorPages();
+builder.Services.AddControllers();
 builder.Services.AddDbContext<FECommerceContext>
 (op => op.UseSqlServer(connection, 
     b => b.MigrationsAssembly("F-e-commerce_EFCore")));
@@ -32,5 +33,5 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
+app.MapControllers();
 app.Run();
