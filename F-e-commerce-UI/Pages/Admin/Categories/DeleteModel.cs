@@ -1,6 +1,6 @@
+using Domain.Models;
 using F_e_commerce_EFCore;
 using F_e_commerce_EFCore.IUnitOfWorks;
-using F_e_commerce_EFCore.Models;
 using F_e_commerce_EFCore.Repository.CategoryRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace F_e_commerce_UI.Pages.Admin.Categories
 {
-    public class EditModel : PageModel
+    public class DeleteModel : PageModel
     {
         // ctor
-        public EditModel(IUnitOfWork commerceContext)
+        public DeleteModel(IUnitOfWork commerceContext)
         {
             _commerceContext = commerceContext;
         }
@@ -19,7 +19,7 @@ namespace F_e_commerce_UI.Pages.Admin.Categories
         // instance of database
         private IUnitOfWork _commerceContext { get; set; }
         // Instance of category
-        [BindProperty] public Category? Category { get; set; }
+        [BindProperty] public Category Category { get; set; }
         // ViewData Of Result
         [TempData]
         public string ResultStatus { get; set; }
@@ -36,10 +36,11 @@ namespace F_e_commerce_UI.Pages.Admin.Categories
         public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid) return Page();
-            await _commerceContext.BeginTrans();
-            await _commerceContext.Categories.UpdateAsync(Category!);
-            await _commerceContext.CommitTrans();
-            ResultStatus = $"Categories {Category.Name} Updated ";
+            //await _commerceContext.BeginTrans();
+            _commerceContext.Categories.Remove(Category!);
+            //await _commerceContext.CommitTrans();
+            await _commerceContext.SaveChangesAsync();
+            ResultStatus = $"Categories   Deleted";
             return RedirectToPage("index", routeValues: ResultStatus);
         }
     }

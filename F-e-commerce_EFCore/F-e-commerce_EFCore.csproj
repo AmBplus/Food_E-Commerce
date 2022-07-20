@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\F-e-commerce-Constants\F-e-commerce-Constants.csproj" />
     <ProjectReference Include="..\F-e-Resources\F-e-Resources.csproj" />
     <ProjectReference Include="..\Services.Common.Abstract\Services.Common.Abstract.csproj" />
@@ -25,7 +26,6 @@
 
   <ItemGroup>
     <Folder Include="IUnitOfWorks\" />
-    <Folder Include="Migrations\" />
     <Folder Include="UnitOfWorks\" />
     <Folder Include="Repository\CategoryRepository\" />
   </ItemGroup>

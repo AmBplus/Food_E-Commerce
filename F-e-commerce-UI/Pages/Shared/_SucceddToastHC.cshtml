@@ -1,6 +1,6 @@
 ﻿@if (TempData["ResultStatus"] !=null)
 {
-    <div id="TempToast" class="toast position-absolute bottom-15 start-8 bg-primary" role="alert" style="z-index: 3">
+    <div id="TempToast" class="toast position-absolute top-0 end-10 bg-primary" role="alert" style="z-index: 3">
         <div class="toast-header bg-primary text-white">
             <strong class="me-auto">Information</strong>
             <button type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast" aria-label="Close">
@@ -11,6 +11,4 @@
             <span class="text-white">@TempData["ResultStatus"]</span>
         </div>
     </div>
-    var t = TempData["ResultStatus"];
-        Console.WriteLine($"Toast {t}");
 }

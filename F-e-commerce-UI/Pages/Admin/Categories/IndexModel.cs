@@ -1,3 +1,4 @@
+using Domain.Models;
 using F_e_commerce_EFCore;
 using F_e_commerce_EFCore.IUnitOfWorks;
 using F_e_commerce_EFCore.Repository.CategoryRepository;
@@ -17,7 +18,7 @@ namespace F_e_commerce_UI.Pages.Admin.Categories
         // Instance Of Database
         private IUnitOfWork _commerceContext { get; set; }
         // Instance Of Categories Model
-        public IEnumerable<F_e_commerce_EFCore.Models.Category> _category { get; set; }
+        public IEnumerable<Category> _category { get; set; }
         public void OnGet()
         {
             

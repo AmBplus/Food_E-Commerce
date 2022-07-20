@@ -1,10 +1,11 @@
+using Domain.Models;
 using F_e_commerce_EFCore;
 using F_e_commerce_EFCore.IUnitOfWorks;
-using F_e_commerce_EFCore.Models;
+using F_e_commerce_EFCore.Repository.CategoryRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace F_e_commerce_UI.Pages.Admin.FoodTypes
+namespace F_e_commerce_UI.Pages.Admin.Categories
 {
     public class CreateModel : PageModel
     {
@@ -17,7 +18,7 @@ namespace F_e_commerce_UI.Pages.Admin.FoodTypes
         // instance of database
         private IUnitOfWork _commerceContext { get;}
         // Instance of category
-        [BindProperty] public F_e_commerce_EFCore.Models.FoodType FoodTypes { get; set; }
+        [BindProperty] public Category Category { get; set; }
         // ViewData Of Result
         [TempData]
         public string ResultStatus { get; set; }
@@ -30,19 +31,17 @@ namespace F_e_commerce_UI.Pages.Admin.FoodTypes
         {
             if (ModelState.IsValid)
             {
-                if ( await _commerceContext.FoodTypes.IsExitAsync(x => x.Name == FoodTypes.Name))
+                if (await _commerceContext.Categories.IsExitAsync(x => x.Name == Category.Name))
                 {
-                    ModelState.AddModelError("", "Duplicated FoodTypes");
+                    ModelState.AddModelError("", "Duplicated Categories");
                     return Page();
                 }
 
-                FoodType CreatefoodTypes = new FoodType();
-                CreatefoodTypes.Name = FoodTypes.Name;
-               // await _commerceContext.BeginTrans();
-                await _commerceContext.FoodTypes.AddAsync(CreatefoodTypes);
-               // await _commerceContext.CommitTrans();
-               await _commerceContext.SaveChangesAsync();
-                ResultStatus = $"FoodTypes {FoodTypes.Name} Created";
+                Category category = new Category();
+                category.Name = Category.Name;
+                await _commerceContext.Categories.AddAsync(category);
+                await _commerceContext.SaveChangesAsync();
+                ResultStatus = $"Categories {Category.Name} Created";
                 return RedirectToPage("index",routeValues: ResultStatus);
             }
             return Page();

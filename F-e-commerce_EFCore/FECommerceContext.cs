@@ -1,4 +1,4 @@
-﻿using F_e_commerce_EFCore.Models;
+﻿using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace F_e_commerce_EFCore;

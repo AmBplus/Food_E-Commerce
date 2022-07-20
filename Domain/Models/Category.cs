@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using F_e_commerce_Constants;
 
-namespace F_e_commerce_EFCore.Models;
+namespace Domain.Models;
 
 public class Category
 {

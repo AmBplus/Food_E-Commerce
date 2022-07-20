@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\F-e-commerce_EFCore\F-e-commerce_EFCore.csproj" />
     <ProjectReference Include="..\F-e-Resources\F-e-Resources.csproj" />
   </ItemGroup>

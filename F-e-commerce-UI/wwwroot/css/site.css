@@ -26,9 +26,12 @@ body {
     background-color: #212121;
 }
 .bottom-15 {
-    bottom: 15% !important
+    bottom: 15% !important;
 }
 .start-8{
-    left: 8% !important
+    left: 8% !important;
 }
 
+.end-10 {
+    right: 10% !important;
+}

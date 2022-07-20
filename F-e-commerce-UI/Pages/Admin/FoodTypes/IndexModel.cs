@@ -1,6 +1,6 @@
+using Domain.Models;
 using F_e_commerce_EFCore;
 using F_e_commerce_EFCore.IUnitOfWorks;
-using F_e_commerce_EFCore.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace F_e_commerce_UI.Pages.Admin.FoodTypes

@@ -11,20 +11,26 @@ public class UnitOfWork : IUnitOfWork
     public UnitOfWork(FECommerceContext context) :base()
     {
         Context = context;
-        Categories = new CategoryRepository(context);
-        FoodTypes = new FoodTypeRepository(context);
+        //Categories = new CategoryRepository(context);
+        //FoodTypes = new FoodTypeRepository(context);
     }
     private ICategoryRepository? _CategoryRepository { get; set; }
     private IFoodTypeRepository? _FoodTypeRepository { get; set; }
 
     public ICategoryRepository Categories
     {
-        get;
+        get
+        {
+            return _CategoryRepository ??= new CategoryRepository(Context);
+        }
     }
 
     public IFoodTypeRepository FoodTypes
     {
-        get;
+        get
+        {
+            return _FoodTypeRepository ??= new FoodTypeRepository(Context);
+        }
     }
 
     public async Task BeginTrans()

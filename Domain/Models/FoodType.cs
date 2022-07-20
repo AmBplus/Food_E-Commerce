@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace F_e_commerce_EFCore.Models;
+namespace Domain.Models;
 
 public class FoodType
 {
