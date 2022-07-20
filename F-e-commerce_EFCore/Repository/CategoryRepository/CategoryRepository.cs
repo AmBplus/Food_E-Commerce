@@ -25,8 +25,6 @@ public class CategoryRepository : Repository<Category>, ICategoryRepository
         Context.Update(Category);
         message = string.Format(Messages.UpdatedFromDatabaseMessage, nameof(category));
         return ViewResult.GetViewResultSucceed(message);
-
-
     }
     public async Task<ViewResult> UpdateAsync(Category category)
     {
@@ -43,5 +41,4 @@ public class CategoryRepository : Repository<Category>, ICategoryRepository
         message = string.Format(Messages.UpdatedFromDatabaseMessage, nameof(category));
         return ViewResult.GetViewResultSucceed(message);
     }
-
 }

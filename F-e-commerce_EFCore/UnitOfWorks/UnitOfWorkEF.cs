@@ -1,6 +1,8 @@
 ﻿using F_e_commerce_EFCore.IUnitOfWorks;
 using F_e_commerce_EFCore.Repository.CategoryRepository;
 using F_e_commerce_EFCore.Repository.FoodRepository;
+using F_e_commerce_EFCore.Repository.MenuItemRepository;
+
 namespace F_e_commerce_EFCore.UnitOfWorks;
 
 public class UnitOfWorkEF : IUnitOfWorkEF
@@ -13,7 +15,7 @@ public class UnitOfWorkEF : IUnitOfWorkEF
     }
     private ICategoryRepository? _CategoryRepository { get; set; }
     private IFoodTypeRepository? _FoodTypeRepository { get; set; }
-
+    private IMenuItemRepository? _MenuItemRepository { get; set; }
     public ICategoryRepository Categories
     {
         get
@@ -27,6 +29,13 @@ public class UnitOfWorkEF : IUnitOfWorkEF
         get
         {
             return _FoodTypeRepository ??= new FoodTypeRepository(Context);
+        }
+    }
+
+    public IMenuItemRepository MenuItems {
+        get
+        {
+            return _MenuItemRepository ??= new MenuItemRepository(Context);
         }
     }
 
