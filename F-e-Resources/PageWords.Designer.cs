@@ -133,6 +133,15 @@ namespace F_e_Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FoodType.
+        /// </summary>
+        public static string FoodType {
+            get {
+                return ResourceManager.GetString("FoodType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Home {
@@ -151,11 +160,47 @@ namespace F_e_Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List.
+        /// </summary>
+        public static string List {
+            get {
+                return ResourceManager.GetString("List", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Menu Item.
+        /// </summary>
+        public static string MenuItem {
+            get {
+                return ResourceManager.GetString("MenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Menu Item Management.
+        /// </summary>
+        public static string MenuItemManagement {
+            get {
+                return ResourceManager.GetString("MenuItemManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        public static string Price {
+            get {
+                return ResourceManager.GetString("Price", resourceCulture);
             }
         }
         

@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Domain.Models;
 using F_e_Resources;
 using Microsoft.EntityFrameworkCore;
 using Services.Common.Abstract;
@@ -6,7 +7,7 @@ using Services.Common.Abstract.IRepository;
 
 namespace F_e_commerce_EFCore.Repository;
 
-  public class Repository<T> : IRepository<T> where T : class
+  public class Repository<T> :  IRepository<T> where T : BaseModel<int>
 {
     // Ctor
     public Repository(FECommerceContext context)
@@ -43,34 +44,65 @@ namespace F_e_commerce_EFCore.Repository;
     {
         Context.SaveChanges();
     }
-    public T GetBy(int id)
+    public T? GetBy(int id, string include = null)
     {
-        return DbSet.Find(id);
+        IQueryable<T> query = DbSet;
+        if (include != null)
+        {
+            query = GetQuery(query, include);
+        }
+        return query.FirstOrDefault(x=>x.Id == id);
     }
     /// <summary>
     /// 
     /// </summary>
     /// <param name="filter"></param>
     /// <returns>if filter Null , Return Null , Otherwise send by filter </returns>
-    public T GetBy(Expression<Func<T, bool>>? filter = null)
+    public T? GetBy(Expression<Func<T, bool>>? filter = null, string include = null)
     {
+        IQueryable<T> query = DbSet;
+        if (include != null)
+        {
+            query = GetQuery(query, include);
+        }
         if (filter != null)
         {
-            return DbSet.Where(filter).FirstOrDefault();
+            return query.Where(filter).FirstOrDefault()  ;
         }
         return null;
     }
-    public IEnumerable<T> GetAll()
+    public IEnumerable<T?> GetAll(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,string include = null)
     {
-        return DbSet.ToList();
-    }
-    public IEnumerable<T> GetByFilter(Expression<Func<T, bool>>? filter = null)
-    {
-        if (filter != null)
+        IQueryable<T> query = DbSet;
+        if (string.IsNullOrWhiteSpace(include))
         {
-            return DbSet.Where(filter).ToList();
+            query = GetQuery(query, include);
+        }
+
+        if (orderBy != null)
+        {
+            return orderBy(query).ToList();
         }
         return DbSet.ToList();
+    }
+    public IEnumerable<T?> GetByFilter(Expression<Func<T, bool>>? filter = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null
+        , string include = null)
+    {
+        IQueryable<T> query = DbSet;
+        if (include != null)
+        {
+            query = GetQuery(query, include);
+        }
+        if (filter != null)
+        {
+            query = query.Where(filter);
+        }
+        if (orderBy != null)
+        {
+            return orderBy(query).ToList();
+        }
+        return query.ToList();
     }
     public async Task<ViewResult> AddAsync(T entity)
     {
@@ -86,26 +118,59 @@ namespace F_e_commerce_EFCore.Repository;
     {
       await Context.SaveChangesAsync();
     }
-    public async Task<T?> GetByAsync(int id)
+    public async Task<T?> GetByAsync(int id, string include = null)
     {
-        return await DbSet.FindAsync(id);
+        IQueryable<T> query = DbSet;
+        if (!string.IsNullOrWhiteSpace(include))
+        {
+            query = GetQuery(query, include);
+        }
+        return await query.FirstOrDefaultAsync(x=>x.Id == id);
     }
-    public async Task<T?> GetByAsync(Expression<Func<T, bool>>? filter = null)
+    public async Task<T?> GetByAsync(Expression<Func<T, bool>>? filter = null, string include = null)
     {
+        IQueryable<T> query = DbSet;
+        if (include != null)
+        {
+            query = GetQuery(query, include);
+        }
         if (filter != null)
         {
-            return await DbSet.Where(filter).FirstOrDefaultAsync();
+            return await query.Where(filter).FirstOrDefaultAsync();
         }
         return null;
     }
-    public async Task<IEnumerable<T?>> GetAllAsync()
+    public async Task<IEnumerable<T?>> GetAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,string include = null)
     {
-        return await DbSet.ToListAsync();
+        IQueryable<T> query = DbSet;
+        if (include != null)
+        {
+            query = GetQuery(query, include);
+        }
+        if (orderBy != null)
+        {
+            return await orderBy(query).ToListAsync();
+        }
+        return await query.ToListAsync();
     }
-    public async Task<IEnumerable<T?>> GetByFilterAsync(Expression<Func<T, bool>>? filter = null)
+    public async Task<IEnumerable<T?>> GetByFilterAsync(Expression<Func<T, bool>>? filter = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null
+        , string include = null)
     {
-        if (filter != null) return await DbSet.Where(filter).ToListAsync();
-        return await DbSet.ToListAsync();
+        IQueryable<T> query = DbSet;
+        if (!string.IsNullOrWhiteSpace(include) )
+        {
+            query = GetQuery(query, include);
+        }
+        if (filter != null)
+        {
+             query = query.Where(filter);
+        }
+        if (orderBy != null)
+        {
+            return await orderBy(query).ToListAsync();
+        }
+        return await query.ToListAsync();
     }
 
     public bool IsExit(Expression<Func<T, bool>> filter)
@@ -137,5 +202,17 @@ namespace F_e_commerce_EFCore.Repository;
             }
         }
     }
+
+    private IQueryable<T> GetQuery(IQueryable<T> query, string include)
+    {
+        if(string.IsNullOrWhiteSpace(include)) throw new NullReferenceException(nameof(include));
+        var NewArray = include.Split(',', StringSplitOptions.RemoveEmptyEntries);
+        foreach (var includes in NewArray)
+        {
+          query =  query.Include(includes);
+        }
+        return query;
+    }
+
 }
 

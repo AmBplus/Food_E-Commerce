@@ -131,5 +131,14 @@ namespace F_e_Resources {
                 return ResourceManager.GetString("MainPrivacy", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /Admin/MenuItems/Index.
+        /// </summary>
+        public static string MenuItemManagement {
+            get {
+                return ResourceManager.GetString("MenuItemManagement", resourceCulture);
+            }
+        }
     }
 }

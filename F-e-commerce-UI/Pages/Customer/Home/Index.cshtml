@@ -1,0 +1,61 @@
+﻿@page
+@model F_e_commerce_UI.Pages.Customer.Home.IndexModel
+@{
+}
+<div class="row container pb-3 backgroundWhite mt-5">
+    @foreach (var category in Model.Categories)
+    {
+        <h2 class="text-success pl-1"><b>@category.Name</b></h2>
+        <div class="col-12">
+            <div class="row my-3">
+                @{
+                    bool flag = false;
+                }
+                @foreach (var menuItem in Model.MenuItems.Where(x => x.ForeignKeyCategory == category.Id))
+                {
+                    <div class="col-lg-4  col-md-6 pb-4 filter">
+                        <div class="card bg-white rounded shadow-sm" style="border: 1px solid #222">
+                            <img class="card-img-top  mx-auto mb-3 " src="@menuItem.Image" alt="menuitem image">
+                            <div class="card-body p-1 px-3 row">
+                                <div class="col-8 h6 mb-4">
+                                    @if (@menuItem.Name.Length > 23)
+                                    {
+                                        <span>@(menuItem.Name[..23] + "...")</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@menuItem.Name</span>
+                                    }
+                                </div>
+                                <div class="col-4 text-end "><span class="text-info h6">@menuItem.Price</span></div>
+                                <hr/>
+                                <div class="col-4">
+                                    <span class="badge rounded-pill bg-primary">@menuItem.Category.Name</span>
+                                </div>
+                                <div class="col-8 border-0">
+                                    @{
+                                        if (menuItem.FoodType.Name.Length > 20)
+                                        {
+                                            <span class="badge rounded-pill bg-warning mx-2">@(menuItem.FoodType.Name[..20] + "...")</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge rounded-pill bg-warning mx-2">@menuItem.FoodType.Name</span>
+                                        }
+                                    }
+
+                                </div>
+                                <div class="col-12 pt-2" style="font-size: 13px; text-align: justify">
+                                    <p>@Html.Raw(menuItem.Description)</p>
+                                </div>
+                                <div class="col-12 p-1">
+                                    <a asp-page="DetailModel" asp-all-route-id="@menuItem.Id" class="btn btn-dark form-control btn-sm p-2" style="height: 40px">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

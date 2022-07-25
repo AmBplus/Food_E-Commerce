@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Services.Common.Abstract;
 
 namespace Domain.Models;
 
-public class Category
+public class Category : BaseModel<int>
 {
-    [Key]
-    public int Id { get; set; }
     [Required]
     public string Name { get; set; }
     public uint DisplayOrder { get; set; }

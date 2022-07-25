@@ -35,3 +35,9 @@ body {
 .end-10 {
     right: 10% !important;
 }
+.card-img-top {
+    width: 100% !important;
+    height: 20vw !important;
+    -webkit-object-fit: fill !important;
+    object-fit: fill !important;
+}

@@ -1,5 +1,4 @@
-﻿
-@using Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,10 +9,11 @@
     <link rel="stylesheet" href="~/css/BooswatchLitera.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/F-e-commerce-UI.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
 </head>
 <body>
-    <header >
+    <header>
         <nav class="navbar navbar-expand-md navbar-dark text-white Abgn-Dark">
             <div class="container">
                 <a class="navbar-brand text-light" asp-area="" asp-page="/Index">F_e_commerce_UI</a>
@@ -29,13 +29,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-page="@PageAddress.MainPrivacy">@PageWords.Privacy</a>
                         </li>
-                    
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" asp-page="@PageAddress.AdminCategoryMain">@PageWords.CategoryManagement</a>
                                 <a class="dropdown-item" asp-page="@PageAddress.AdminFoodMain">@PageWords.FoodManagement</a>
-
+                                <a class="dropdown-item" asp-page="@PageAddress.MenuItemManagement">@PageWords.MenuItemManagement</a>
                             </div>
                         </li>
                     </ul>
@@ -58,6 +58,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @*<partial name="_SucceddToastScript"/>*@
     @await RenderSectionAsync("Scripts", required: false)
 </body>

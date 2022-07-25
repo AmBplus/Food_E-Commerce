@@ -12,9 +12,9 @@ namespace F_e_commerce_UI.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-
+            return RedirectToPage("/Customer/Home/Index");
         }
     }
 }

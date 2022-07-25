@@ -141,4 +141,7 @@
   <data name="MainPrivacy" xml:space="preserve">
     <value>/Privacy</value>
   </data>
+  <data name="MenuItemManagement" xml:space="preserve">
+    <value>/Admin/MenuItems/Index</value>
+  </data>
 </root>

@@ -41,4 +41,5 @@ public class CategoryRepository : Repository<Category>, ICategoryRepository
         message = string.Format(Messages.UpdatedFromDatabaseMessage, nameof(category));
         return ViewResult.GetViewResultSucceed(message);
     }
+
 }

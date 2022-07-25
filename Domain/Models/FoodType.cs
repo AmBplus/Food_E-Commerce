@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Services.Common.Abstract;
 
 namespace Domain.Models;
 
-public class FoodType
+public class FoodType : BaseModel<int>
 {
-    public  int Id { get; set; }
+  
     [Required]
     public  string Name { get; set; }
 }
