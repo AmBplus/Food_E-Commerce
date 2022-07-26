@@ -115,9 +115,6 @@ namespace F_e_commerce_EFCore.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("test")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("MenuItemId");

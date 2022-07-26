@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace F_e_commerce_EFCore.Migrations
 {
     [DbContext(typeof(FECommerceContext))]
-    [Migration("20220726060643_init_tes1")]
-    partial class init_tes1
+    [Migration("20220726062122_remove-test")]
+    partial class removetest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -116,9 +116,6 @@ namespace F_e_commerce_EFCore.Migrations
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("test")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

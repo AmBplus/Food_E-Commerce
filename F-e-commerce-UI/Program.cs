@@ -22,7 +22,13 @@ builder.Services.AddSingleton<IEmailSender, CommonUtility.EmailSender>();
 builder.Services.AddIdentity<ApplicationUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false).AddDefaultTokenProviders()
     .AddEntityFrameworkStores<FECommerceContext>();
 builder.Services.AddTransient<IUnitOfWorkEF, UnitOfWorkEF>();
+builder.Services.ConfigureApplicationCookie(op =>
+{
+    op.LoginPath = "/Identity/Account/Login";
+    op.AccessDeniedPath = "/Identity/Account/Logout";
+    op.LogoutPath = "/Identity/Account/AccessDenied";
 
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -4,9 +4,16 @@
 
 namespace F_e_commerce_EFCore.Migrations
 {
-    public partial class init_test : Migration
+    public partial class removetest : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropColumn(
+                name: "test",
+                table: "ShopingCarts");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
                 name: "test",
@@ -14,13 +21,6 @@ namespace F_e_commerce_EFCore.Migrations
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "test",
-                table: "ShopingCarts");
         }
     }
 }

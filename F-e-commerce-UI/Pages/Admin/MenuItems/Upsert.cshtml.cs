@@ -100,7 +100,8 @@ namespace F_e_commerce_UI.Pages.Admin.MenuItems
             }
             else
             {
-                var findMenuItem = MenuItem.Image;
+                var findMenuItem =await UnitOfWork.MenuItems.GetByAsync(x => x.Id == MenuItem.Id);
+
                 if (file is { Length: > 0 })
                 {
                     var secureFileName = Path.GetFileName(file.FileName);
@@ -113,23 +114,22 @@ namespace F_e_commerce_UI.Pages.Admin.MenuItems
                     {
                         await file.CopyToAsync(fileStream);
                     }
-                    if (MenuItem.Image != Constance.NoImagePath)
+                    if (findMenuItem.Image != Constance.NoImagePath)
                     {
-                        var imagePath = HostEnvironment.WebRootPath + MenuItem.Image;
+                        var imagePath = HostEnvironment.WebRootPath + findMenuItem.Image;
                         if (System.IO.File.Exists(imagePath))
                         {
                             System.IO.File.Delete(imagePath);
                         }
                     }
-                    MenuItem!.Image = pathFolderMenuItem + "\\" + newFileName;
-                    UnitOfWork.MenuItems.Update(MenuItem);
+                    findMenuItem!.Image = pathFolderMenuItem + "\\" + newFileName;
+                    UnitOfWork.MenuItems.Update(findMenuItem);
                     await UnitOfWork.SaveChangesAsync();
                 }
                 else
                 {
-                    if (!string.IsNullOrWhiteSpace(findMenuItem)) MenuItem.Image = findMenuItem;
-                    if (string.IsNullOrWhiteSpace(MenuItem.Image)) MenuItem.Image = Constance.NoImagePath;
-                    UnitOfWork.MenuItems.Update(MenuItem);
+                    if (string.IsNullOrWhiteSpace(findMenuItem.Image)) findMenuItem.Image = Constance.NoImagePath;
+                    UnitOfWork.MenuItems.Update(findMenuItem);
                     await UnitOfWork.SaveChangesAsync();
                 }
             }

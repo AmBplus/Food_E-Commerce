@@ -6,7 +6,7 @@ using Services.Common.Abstract;
 
 namespace F_e_commerce_EFCore.Repository.ShoppingCartRepository;
 
-public class ShoppingCartRepository: Repository<ShoppingCart>
+public class ShoppingCartRepository: Repository<ShoppingCart> , IShoppingCartRepository
 {
     private FECommerceContext Context;
     public ShoppingCartRepository(FECommerceContext context) : base(context)

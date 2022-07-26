@@ -6,6 +6,7 @@ namespace Domain.Models;
 
 public class ShoppingCart: BaseModel<int>
 {
+    [Range(minimum:1,maximum:100)]
     public uint Count { get; set; }
     public int MenuItemId { get; set; }
     [ForeignKey(nameof(MenuItemId))]
@@ -13,5 +14,5 @@ public class ShoppingCart: BaseModel<int>
     public string UserId { get; set; }
     [ForeignKey(nameof(UserId))]
     public virtual ApplicationUser User { get; set; }
-    public int test { get; set; }
-}
+    }
+   

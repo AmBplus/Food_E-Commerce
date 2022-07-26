@@ -23,7 +23,10 @@ public class MenuItemRepository : Repository<MenuItem> , IMenuItemRepository
             message = string.Format(Messages.CantFindDatabaseMessage, nameof(MenuItem));
             return ViewResult.GetViewResultFailed(message);
         }
-        Context.Entry(entity).State = EntityState.Modified;
+        if (!(Context.Entry(entity).State == EntityState.Modified))
+        {
+            Context.Entry(entity).State = EntityState.Modified;
+        }
         Context.Update(entity);
         message = string.Format(Messages.UpdatedFromDatabaseMessage, nameof(MenuItem));
         return ViewResult.GetViewResultSucceed(message);
