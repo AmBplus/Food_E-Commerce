@@ -8,7 +8,7 @@ namespace F_e_commerce_EFCore.IUnitOfWorks;
 public interface IUnitOfWorkEF :IUnitOfWork
 {
     ICategoryRepository Categories { get;}
-    IFoodTypeRepository FoodTypes { get; }
+    IFoodTypeCartRepository FoodTypes { get; }
     IMenuItemRepository MenuItems { get; }
 
 }

@@ -14,7 +14,7 @@ public class UnitOfWorkEF : IUnitOfWorkEF
         Context = context;
     }
     private ICategoryRepository? _CategoryRepository { get; set; }
-    private IFoodTypeRepository? _FoodTypeRepository { get; set; }
+    private IFoodTypeCartRepository? _FoodTypeRepository { get; set; }
     private IMenuItemRepository? _MenuItemRepository { get; set; }
     public ICategoryRepository Categories
     {
@@ -24,7 +24,7 @@ public class UnitOfWorkEF : IUnitOfWorkEF
         }
     }
 
-    public IFoodTypeRepository FoodTypes
+    public IFoodTypeCartRepository FoodTypes
     {
         get
         {

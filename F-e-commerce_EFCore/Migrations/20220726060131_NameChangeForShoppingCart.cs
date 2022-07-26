@@ -5,18 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace F_e_commerce_EFCore.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class NameChangeForShoppingCart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_MenuItems_Categories_ForeignKeyCategory",
-                table: "MenuItems");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_MenuItems_FoodTypes_ForeignKeyFoodType",
-                table: "MenuItems");
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -36,6 +28,9 @@ namespace F_e_commerce_EFCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -54,6 +49,33 @@ namespace F_e_commerce_EFCore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DisplayOrder = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FoodTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FoodTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -102,8 +124,8 @@ namespace F_e_commerce_EFCore.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -147,8 +169,8 @@ namespace F_e_commerce_EFCore.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -158,6 +180,63 @@ namespace F_e_commerce_EFCore.Migrations
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MenuItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ForeignKeyCategory = table.Column<int>(type: "int", nullable: false),
+                    ForeignKeyFoodType = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MenuItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MenuItems_Categories_ForeignKeyCategory",
+                        column: x => x.ForeignKeyCategory,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MenuItems_FoodTypes_ForeignKeyFoodType",
+                        column: x => x.ForeignKeyFoodType,
+                        principalTable: "FoodTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShopingCarts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Count = table.Column<long>(type: "bigint", nullable: false),
+                    MenuItemId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShopingCarts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ShopingCarts_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ShopingCarts_MenuItems_MenuItemId",
+                        column: x => x.MenuItemId,
+                        principalTable: "MenuItems",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -201,33 +280,29 @@ namespace F_e_commerce_EFCore.Migrations
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_MenuItems_Categories_ForeignKeyCategory",
+            migrationBuilder.CreateIndex(
+                name: "IX_MenuItems_ForeignKeyCategory",
                 table: "MenuItems",
-                column: "ForeignKeyCategory",
-                principalTable: "Categories",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                column: "ForeignKeyCategory");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_MenuItems_FoodTypes_ForeignKeyFoodType",
+            migrationBuilder.CreateIndex(
+                name: "IX_MenuItems_ForeignKeyFoodType",
                 table: "MenuItems",
-                column: "ForeignKeyFoodType",
-                principalTable: "FoodTypes",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                column: "ForeignKeyFoodType");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShopingCarts_MenuItemId",
+                table: "ShopingCarts",
+                column: "MenuItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShopingCarts_UserId",
+                table: "ShopingCarts",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_MenuItems_Categories_ForeignKeyCategory",
-                table: "MenuItems");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_MenuItems_FoodTypes_ForeignKeyFoodType",
-                table: "MenuItems");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -244,26 +319,22 @@ namespace F_e_commerce_EFCore.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ShopingCarts");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_MenuItems_Categories_ForeignKeyCategory",
-                table: "MenuItems",
-                column: "ForeignKeyCategory",
-                principalTable: "Categories",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.SetNull);
+            migrationBuilder.DropTable(
+                name: "MenuItems");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_MenuItems_FoodTypes_ForeignKeyFoodType",
-                table: "MenuItems",
-                column: "ForeignKeyFoodType",
-                principalTable: "FoodTypes",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.SetNull);
+            migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "FoodTypes");
         }
     }
 }

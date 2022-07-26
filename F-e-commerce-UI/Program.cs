@@ -1,3 +1,4 @@
+using Domain.Models;
 using F_e_commerce_EFCore;
 using F_e_commerce_EFCore.IUnitOfWorks;
 using F_e_commerce_EFCore.Repository.CategoryRepository;
@@ -5,6 +6,7 @@ using F_e_commerce_EFCore.Repository.FoodRepository;
 using F_e_commerce_EFCore.UnitOfWorks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +18,8 @@ builder.Services.AddDbContext<FECommerceContext>
 (op => op.UseSqlServer(connection, 
     b => b.MigrationsAssembly("F-e-commerce_EFCore")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddSingleton<IEmailSender, CommonUtility.EmailSender>();
+builder.Services.AddIdentity<ApplicationUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false).AddDefaultTokenProviders()
     .AddEntityFrameworkStores<FECommerceContext>();
 builder.Services.AddTransient<IUnitOfWorkEF, UnitOfWorkEF>();
 

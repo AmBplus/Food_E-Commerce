@@ -7,7 +7,7 @@ using Services.Common.Abstract;
 
 namespace F_e_commerce_EFCore.Repository.FoodRepository;
 
-public class FoodTypeRepository: Repository<FoodType> , IFoodTypeRepository
+public class FoodTypeRepository: Repository<FoodType> , IFoodTypeCartRepository
 {
     private FECommerceContext Context;
     public FoodTypeRepository(FECommerceContext context) : base(context)
