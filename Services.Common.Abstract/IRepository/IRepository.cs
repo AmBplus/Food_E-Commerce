@@ -25,7 +25,4 @@ public interface IRepository<T> : IDisposable where T : BaseModel<int>
         ,string include = null);
     bool IsExit(Expression<Func<T, bool>> filter);
     Task<bool> IsExitAsync(Expression<Func<T, bool>> filter);
-    
-    
-
 }

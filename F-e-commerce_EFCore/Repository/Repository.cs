@@ -47,7 +47,7 @@ namespace F_e_commerce_EFCore.Repository;
     public T? GetBy(int id, string include = null)
     {
         IQueryable<T> query = DbSet;
-        if (include != null)
+        if (!string.IsNullOrWhiteSpace(include))
         {
             query = GetQuery(query, include);
         }
@@ -61,7 +61,7 @@ namespace F_e_commerce_EFCore.Repository;
     public T? GetBy(Expression<Func<T, bool>>? filter = null, string include = null)
     {
         IQueryable<T> query = DbSet;
-        if (include != null)
+        if (!string.IsNullOrWhiteSpace(include))
         {
             query = GetQuery(query, include);
         }
@@ -74,7 +74,7 @@ namespace F_e_commerce_EFCore.Repository;
     public IEnumerable<T?> GetAll(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,string include = null)
     {
         IQueryable<T> query = DbSet;
-        if (string.IsNullOrWhiteSpace(include))
+        if (!string.IsNullOrWhiteSpace(include))
         {
             query = GetQuery(query, include);
         }
@@ -90,7 +90,7 @@ namespace F_e_commerce_EFCore.Repository;
         , string include = null)
     {
         IQueryable<T> query = DbSet;
-        if (include != null)
+        if (!string.IsNullOrWhiteSpace(include))
         {
             query = GetQuery(query, include);
         }
@@ -130,7 +130,7 @@ namespace F_e_commerce_EFCore.Repository;
     public async Task<T?> GetByAsync(Expression<Func<T, bool>>? filter = null, string include = null)
     {
         IQueryable<T> query = DbSet;
-        if (include != null)
+        if (!string.IsNullOrWhiteSpace(include))
         {
             query = GetQuery(query, include);
         }
@@ -143,7 +143,7 @@ namespace F_e_commerce_EFCore.Repository;
     public async Task<IEnumerable<T?>> GetAllAsync(Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,string include = null)
     {
         IQueryable<T> query = DbSet;
-        if (include != null)
+        if (!string.IsNullOrWhiteSpace(include))
         {
             query = GetQuery(query, include);
         }

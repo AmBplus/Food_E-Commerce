@@ -1,9 +1,11 @@
-﻿using Domain.Models;
+﻿using System.Security.Principal;
+using Domain.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace F_e_commerce_EFCore;
 
-public class FECommerceContext : DbContext
+public class FECommerceContext : IdentityDbContext
 {
     public FECommerceContext(DbContextOptions<FECommerceContext> options) : base(options)
     {
@@ -11,4 +13,5 @@ public class FECommerceContext : DbContext
     public DbSet<Category> Categories { get; set; }
     public DbSet<FoodType> FoodTypes { get; set; }
     public DbSet<MenuItem> MenuItems { get; set; }
+
 }
