@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Common.Abstract", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{889DAB97-4AD7-4EC5-8B87-C1D27E03A4B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonUtility", "CommonUtility\CommonUtility.csproj", "{36EE8E0C-D4D0-4329-9EB0-1E6489E98A04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonUtility", "CommonUtility\CommonUtility.csproj", "{36EE8E0C-D4D0-4329-9EB0-1E6489E98A04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

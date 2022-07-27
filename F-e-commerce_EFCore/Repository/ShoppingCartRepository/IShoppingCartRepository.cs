@@ -7,5 +7,7 @@ namespace F_e_commerce_EFCore.Repository.ShoppingCartRepository;
 public interface IShoppingCartRepository : IRepository<ShoppingCart>
 {
     ViewResult Update(ShoppingCart entity);
-    Task<ViewResult> UpdateAsync(ShoppingCart entity); 
+    Task<ViewResult> UpdateAsync(ShoppingCart entity);
+    Task<ViewResult> IncrementCount(int id);
+    Task<ViewResult> DecrementCount(int id);
 }

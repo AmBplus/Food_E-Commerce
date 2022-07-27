@@ -1,43 +1,88 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
 .Abtn-primary {
     background-color: #0d6efd !important;
 }
+
 .Abtn-Gray {
     background-color: #373a40 !important;
 }
+
 .Abgn-Dark {
     background-color: #212121;
 }
+
 .bottom-15 {
     bottom: 15% !important;
 }
-.start-8{
+
+.start-8 {
     left: 8% !important;
 }
 
 .end-10 {
     right: 10% !important;
 }
+
 .card-img-top {
     width: 100% !important;
     height: 20vw !important;
     -webkit-object-fit: fill !important;
     object-fit: fill !important;
+}
+
+.btn-green {
+    background-color: #198754;
+    color: azure;
+}
+
+    .btn-green:hover {
+        background-color: darkgreen;
+        color: azure;
+    }
+
+.btn-blue {
+    background-color: #0d6efd;
+    color: azure;
+}
+
+    .btn-blue:hover {
+        background-color: #010efd;
+        color: azure;
+    }
+
+.btn-lightBlue {
+    background-color: #0dcaf0;
+    color: azure;
+}
+
+.btn-Red {
+    background-color: #dc3545;
+    color: azure;
+}
+.btn-Red:hover {
+        background-color: #a50000;
+        color: azure;
+    }
+
+.btn-DarkBlue {
+    background-color: #375a7f;
+    color: azure;
 }

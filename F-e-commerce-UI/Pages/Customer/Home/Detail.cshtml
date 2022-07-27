@@ -4,6 +4,8 @@
 
 <div class="">
     <form method="post">
+        <input type="hidden" asp-for="ShoppingCart.MenuItemId"/>
+        <input type="hidden" asp-for="ShoppingCart.UserId"/>
         <div class="container backgroundWhite">
             <div class="card mt-4">
                 <div class="card-header">
@@ -16,7 +18,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body " >
+                <div class="card-body ">
                     <div class="container rounded p-2">
                         <div class="row">
                             <div class="col-12 col-lg-8">
@@ -30,17 +32,17 @@
                                         <p class="text-secondary">@Html.Raw(@Model.ShoppingCart.MenuItem.Description)</p>
 
                                         <div class="form-floating my-2">
-                                            <input  asp-for="ShoppingCart.Count" class="form-control" aria-required="true" />
+                                            <input asp-for="ShoppingCart.Count" class="form-control" aria-required="true"/>
                                             <label >Count</label>
-                                            <span asp-validation-for="ShoppingCart.Count"></span>
+                                            <span class="text-danger" asp-validation-for="ShoppingCart.Count"></span>
                                         </div>
-                                          
+
                                     </div>
 
                                 </div>
                             </div>
                             <div class="col-12 col-lg-4 p-1 text-center">
-                                <img src="@Model.ShoppingCart.MenuItem.Image" width="100%" class="rounded" />
+                                <img src="@Model.ShoppingCart.MenuItem.Image" width="100%" class="rounded"/>
                             </div>
 
 
@@ -50,10 +52,10 @@
                 <div class="card-footer">
                     <div class="row">
                         <div class="col-12 col-md-6 py-3 " style="max-width: 200px">
-                            <a class="btn btn-success btn-square form-control" style="height:40px;">Back to List</a>
+                            <a  asp-page="index" class="btn btn-success btn-square form-control" style="height: 40px;">Back to List</a>
                         </div>
                         <div class="col-12 col-md-6 py-3 " style="max-width: 200px">
-                            <button type="submit" class="btn btn-primary btn-square form-control" style="height:40px;">Add to Cart</button>
+                            <button type="submit" class="btn btn-primary btn-square form-control" style="height: 40px;">Add to Cart</button>
                         </div>
                     </div>
                 </div>

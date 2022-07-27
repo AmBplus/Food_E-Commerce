@@ -91,7 +91,7 @@ public class UnitOfWorkEF : IUnitOfWorkEF
         {
             if (Context != null)
             {
-             await   Context.DisposeAsync();
+             Context.Dispose();
                 Context = null;
                 IsDisposed = true;
             }

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 using Domain.Models;
 using F_e_commerce_EFCore.IUnitOfWorks;
 using Microsoft.AspNetCore.Authorization;
@@ -18,18 +19,49 @@ namespace F_e_commerce_UI.Pages.Customer.Home
         private IUnitOfWorkEF UnitOfWork { get; set; }
         public async Task OnGet(int id)
         {
-            ShoppingCart = new()
+            var claimIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            var userId = claim.Value;
+            var findShoppingCart =
+                await UnitOfWork.ShoppingCarts.GetByAsync(filter:x => x.UserId == userId && x.MenuItemId == id );
+            if (findShoppingCart == null)
             {
-                MenuItem = await UnitOfWork.MenuItems.GetByAsync(id: id,
-                    include: $"{nameof(Category)},{nameof(FoodType)}")
-            };
+                ShoppingCart = new()
+                {
+                    MenuItem = await UnitOfWork.MenuItems.GetByAsync(id: id,
+                        include: $"{nameof(Category)},{nameof(FoodType)}"),
+                    MenuItemId = id,
+                    UserId = claim.Value
+                };
+            }
+            else
+            {
+                ShoppingCart = findShoppingCart;
+                ShoppingCart.MenuItem = await UnitOfWork.MenuItems.GetByAsync(id: id,
+                    include: $"{nameof(Category)},{nameof(FoodType)}"); 
+            }
 
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-
-            //UnitOfWork.ShoppingCarts.Add(ShoppingCart);
+            if (ModelState.IsValid)
+            {
+                var findShoppingCart =
+                    await UnitOfWork.ShoppingCarts.GetByAsync(filter:x => x.UserId == ShoppingCart.UserId && x.MenuItemId == ShoppingCart.MenuItemId);
+                if (findShoppingCart == null)
+                {
+                    await UnitOfWork.ShoppingCarts.AddAsync(ShoppingCart);
+                    await UnitOfWork.SaveChangesAsync();
+                }
+                else
+                {
+                    findShoppingCart.Count = ShoppingCart.Count;
+                    await UnitOfWork.ShoppingCarts.UpdateAsync(findShoppingCart);
+                    await UnitOfWork.SaveChangesAsync();
+                }
+                
+            }
             return RedirectToPage("index");
         }
 
