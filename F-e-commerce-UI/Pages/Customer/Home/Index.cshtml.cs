@@ -7,12 +7,12 @@ namespace F_e_commerce_UI.Pages.Customer.Home
 {
     public class IndexModel : PageModel
     {
-        public IndexModel(IUnitOfWorkEF unitOfWork)
+        public IndexModel(IUnitOfWorkEf unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
 
-        private IUnitOfWorkEF unitOfWork { get; }
+        private IUnitOfWorkEf unitOfWork { get; }
         public IEnumerable<MenuItem> MenuItems { get; set; }
         public IEnumerable<Category> Categories { get; set; }
         public async Task OnGet()

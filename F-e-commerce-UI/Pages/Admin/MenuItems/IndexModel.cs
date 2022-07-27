@@ -7,14 +7,14 @@ namespace F_e_commerce_UI.Pages.Admin.MenuItems
     public class IndexModel : PageModel
     {
         // ctor
-        public IndexModel(IUnitOfWorkEF commerceContext )
+        public IndexModel(IUnitOfWorkEf commerceContext )
         {
             _commerceContext = commerceContext;
         }
         // properties
 
         // Instance Of Database
-        private IUnitOfWorkEF _commerceContext { get; set; }
+        private IUnitOfWorkEf _commerceContext { get; set; }
         // Instance Of FoodTypes Model
         public IEnumerable<FoodType> _FoodTypes { get; set; }
         public void OnGet()

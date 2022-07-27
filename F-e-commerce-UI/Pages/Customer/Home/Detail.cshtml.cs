@@ -11,12 +11,12 @@ namespace F_e_commerce_UI.Pages.Customer.Home
     [Authorize]
     public class DetailModel : PageModel
     {
-        public DetailModel(IUnitOfWorkEF unitOfWork)
+        public DetailModel(IUnitOfWorkEf unitOfWork)
         {
             UnitOfWork = unitOfWork;
         }
         [BindProperty] public ShoppingCart ShoppingCart { get; set; }
-        private IUnitOfWorkEF UnitOfWork { get; set; }
+        private IUnitOfWorkEf UnitOfWork { get; set; }
         public async Task OnGet(int id)
         {
             var claimIdentity = (ClaimsIdentity)User.Identity;

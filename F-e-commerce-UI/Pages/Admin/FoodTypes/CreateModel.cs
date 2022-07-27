@@ -9,13 +9,13 @@ namespace F_e_commerce_UI.Pages.Admin.FoodTypes
     public class CreateModel : PageModel
     {
         // ctor
-        public CreateModel(IUnitOfWorkEF commerceContext)
+        public CreateModel(IUnitOfWorkEf commerceContext)
         {
             _commerceContext = commerceContext;
         }
         // properties
         // instance of database
-        private IUnitOfWorkEF _commerceContext { get;}
+        private IUnitOfWorkEf _commerceContext { get;}
         // Instance of category
         [BindProperty] public FoodType FoodTypes { get; set; }
         // ViewData Of Result

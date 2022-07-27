@@ -2,22 +2,42 @@
 using F_e_commerce_EFCore.Repository.CategoryRepository;
 using F_e_commerce_EFCore.Repository.FoodRepository;
 using F_e_commerce_EFCore.Repository.MenuItemRepository;
+using F_e_commerce_EFCore.Repository.OrderDetailRepository;
+using F_e_commerce_EFCore.Repository.OrderHeaderRepository;
 using F_e_commerce_EFCore.Repository.ShoppingCartRepository;
+using F_e_commerce_EFCore.Repository.UserReoistory;
 
 namespace F_e_commerce_EFCore.UnitOfWorks;
 
-public class UnitOfWorkEF : IUnitOfWorkEF
+public class UnitOfWorkEf : UnitOfWork, IUnitOfWorkEf
 {
     FECommerceContext Context;
-
-    public UnitOfWorkEF(FECommerceContext context) :base()
+    public UnitOfWorkEf(FECommerceContext context) : base(context)
     {
         Context = context;
     }
+    // Private Property 
+    // ************************************************************************
+
+    #region Private Property
+
     private ICategoryRepository? _CategoryRepository { get; set; }
     private IFoodTypeCartRepository? _FoodTypeRepository { get; set; }
     private IMenuItemRepository? _MenuItemRepository { get; set; }
     private IShoppingCartRepository? _ShoppingCartRepository { get; set; }
+    private IOrderHeaderRepository? _OrderHeaderRepository { get; set; }
+    private IOrderDetailRepository? _OrderDetailRepository { get; set; }
+    private IUserRepository? _UserRepository { get; set; }
+
+    #endregion Private Property
+
+    // ************************************************************************
+
+    // Public Property 
+    // ************************************************************************
+
+    #region Public Property 
+
     public ICategoryRepository Categories
     {
         get
@@ -25,7 +45,6 @@ public class UnitOfWorkEF : IUnitOfWorkEF
             return _CategoryRepository ??= new CategoryRepository(Context);
         }
     }
-
     public IFoodTypeCartRepository FoodTypes
     {
         get
@@ -33,14 +52,13 @@ public class UnitOfWorkEF : IUnitOfWorkEF
             return _FoodTypeRepository ??= new FoodTypeRepository(Context);
         }
     }
-
-    public IMenuItemRepository MenuItems {
+    public IMenuItemRepository MenuItems
+    {
         get
         {
             return _MenuItemRepository ??= new MenuItemRepository(Context);
         }
     }
-
     public IShoppingCartRepository ShoppingCarts
     {
         get
@@ -49,53 +67,31 @@ public class UnitOfWorkEF : IUnitOfWorkEF
         }
     }
 
-    public async Task BeginTrans()
+    public IOrderHeaderRepository OrderHeader
     {
-       await Context.Database.BeginTransactionAsync();
-    }
-
-    public async Task CommitTrans()
-    {
-        await Context.SaveChangesAsync();
-        await Context.Database.CommitTransactionAsync();
-
-    }
-
-    public async Task RollBack()
-    {
-        await Context.Database.RollbackTransactionAsync();
-    }
-
-    public bool IsDisposed { get; protected set; }
-
-    public async Task SaveChangesAsync()
-    {
-        _ = Context.SaveChangesAsync();
-    }
-
-    public void SaveChanges()
-    {
-        Context.SaveChanges();
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    protected virtual async Task Dispose(bool disposing)
-    {
-        if(IsDisposed)return;
-        if (disposing)
+        get
         {
-            if (Context != null)
-            {
-             Context.Dispose();
-                Context = null;
-                IsDisposed = true;
-            }
+            return _OrderHeaderRepository ??= new OrderHeaderRepository(Context);
         }
     }
+
+    public IOrderDetailRepository OrderDetails
+    {
+        get
+        {
+            return _OrderDetailRepository ??= new OrderDetailRepository(Context);
+        }
+    }
+
+    public IUserRepository Users
+    {
+        get
+        {
+            return _UserRepository ??= new UserRepository(context: Context);
+        }
+    }
+
+    #endregion Public Property 
+    // ************************************************************************
 }
 

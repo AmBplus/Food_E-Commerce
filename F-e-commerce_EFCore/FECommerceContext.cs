@@ -15,5 +15,7 @@ public class FECommerceContext : IdentityDbContext
     public DbSet<MenuItem> MenuItems { get; set; }
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public DbSet<ShoppingCart> ShopingCarts { get; set; }
+    public DbSet<OrderDetail> OrderDetails { get; set; }
+    public DbSet<OrderHeader> OrderHeaders { get; set; }
 
 }

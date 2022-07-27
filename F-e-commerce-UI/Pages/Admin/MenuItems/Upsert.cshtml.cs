@@ -14,7 +14,7 @@ namespace F_e_commerce_UI.Pages.Admin.MenuItems
     [BindProperties]
     public class UpsertModel : PageModel
     {
-        public UpsertModel(IUnitOfWorkEF unitOfWork, IWebHostEnvironment hostEnvironment)
+        public UpsertModel(IUnitOfWorkEf unitOfWork, IWebHostEnvironment hostEnvironment)
         {
             UnitOfWork = unitOfWork;
             HostEnvironment = hostEnvironment;
@@ -30,7 +30,7 @@ namespace F_e_commerce_UI.Pages.Admin.MenuItems
         public IEnumerable<SelectListItem> FoodTypeListItems { get; set; }
 
 
-        private IUnitOfWorkEF UnitOfWork { get; set; }
+        private IUnitOfWorkEf UnitOfWork { get; set; }
         public async Task OnGet(int? id)
         {
             MenuItem = new MenuItem();

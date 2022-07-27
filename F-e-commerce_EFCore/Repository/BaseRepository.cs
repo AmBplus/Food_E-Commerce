@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using Domain.Models;
 using F_e_Resources;
 using Microsoft.EntityFrameworkCore;
 using Services.Common.Abstract;
@@ -7,10 +6,10 @@ using Services.Common.Abstract.IRepository;
 
 namespace F_e_commerce_EFCore.Repository;
 
-  public class Repository<TEntity> :  IRepository<TEntity> where TEntity : BaseModel<int>
+public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
 {
     // Ctor
-    public Repository(FECommerceContext context)
+    public BaseRepository(FECommerceContext context)
     {
         Context = context;
         DbSet = context.Set<TEntity>();
@@ -19,11 +18,11 @@ namespace F_e_commerce_EFCore.Repository;
     // Instance Of Database
     private FECommerceContext Context { get; set; }
     // Instance Of TEntity DbSet
-    internal DbSet<TEntity> DbSet ;
+    internal DbSet<TEntity> DbSet;
     public ViewResult Add(TEntity entity)
     {
         DbSet.Add(entity);
-        return ViewResult.GetViewResultSucceed(Messages.SucceedMessage);    
+        return ViewResult.GetViewResultSucceed(Messages.SucceedMessage);
     }
     public ViewResult Remove(TEntity entity)
     {
@@ -44,15 +43,7 @@ namespace F_e_commerce_EFCore.Repository;
     {
         Context.SaveChanges();
     }
-    public TEntity? GetBy(int id, string include = null)
-    {
-        IQueryable<TEntity> query = DbSet;
-        if (!string.IsNullOrWhiteSpace(include))
-        {
-            query = GetQuery(query, include);
-        }
-        return query.FirstOrDefault(x=>x.Id == id);
-    }
+ 
     /// <summary>
     /// 
     /// </summary>
@@ -67,11 +58,11 @@ namespace F_e_commerce_EFCore.Repository;
         }
         if (filter != null)
         {
-            return query.Where(filter).FirstOrDefault()  ;
+            return query.Where(filter).FirstOrDefault();
         }
         return null;
     }
-    public IEnumerable<TEntity?> GetAll(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,string include = null)
+    public IEnumerable<TEntity?> GetAll(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string include = null)
     {
         IQueryable<TEntity> query = DbSet;
         if (!string.IsNullOrWhiteSpace(include))
@@ -116,17 +107,9 @@ namespace F_e_commerce_EFCore.Repository;
     }
     public async Task SaveChangesAsync()
     {
-      await Context.SaveChangesAsync();
+        await Context.SaveChangesAsync();
     }
-    public async Task<TEntity?> GetByAsync(int id, string include = null)
-    {
-        IQueryable<TEntity> query = DbSet;
-        if (!string.IsNullOrWhiteSpace(include))
-        {
-            query = GetQuery(query, include);
-        }
-        return await query.FirstOrDefaultAsync(x=>x.Id == id);
-    }
+ 
     public async Task<TEntity?> GetByAsync(Expression<Func<TEntity, bool>>? filter = null, string include = null)
     {
         IQueryable<TEntity> query = DbSet;
@@ -140,7 +123,7 @@ namespace F_e_commerce_EFCore.Repository;
         }
         return null;
     }
-    public async Task<IEnumerable<TEntity?>> GetAllAsync(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,string include = null)
+    public async Task<IEnumerable<TEntity?>> GetAllAsync(Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string include = null)
     {
         IQueryable<TEntity> query = DbSet;
         if (!string.IsNullOrWhiteSpace(include))
@@ -158,13 +141,13 @@ namespace F_e_commerce_EFCore.Repository;
         , string include = null)
     {
         IQueryable<TEntity> query = DbSet;
-        if (!string.IsNullOrWhiteSpace(include) )
+        if (!string.IsNullOrWhiteSpace(include))
         {
             query = GetQuery(query, include);
         }
         if (filter != null)
         {
-             query = query.Where(filter);
+            query = query.Where(filter);
         }
         if (orderBy != null)
         {
@@ -183,32 +166,12 @@ namespace F_e_commerce_EFCore.Repository;
         return await DbSet.AnyAsync(filter);
     }
 
-    public  ViewResult Update(TEntity entity)
-    {
-        var message = string.Empty;
-        if (!IsExit(x => x.Id == entity.Id))
-        {
-            message = string.Format(Messages.CantFindDatabaseMessage, nameof(TEntity));
-            return ViewResult.GetViewResultFailed(message);
-        }
-        return Update(entity, message);
-    }
-
-    public async Task<ViewResult> UpdateAsync(TEntity entity)
-    {
-        var message = string.Empty;
-        if (! await IsExitAsync(x => x.Id == entity.Id))
-        {
-            message = string.Format(Messages.CantFindDatabaseMessage, nameof(TEntity));
-            return ViewResult.GetViewResultFailed(message);
-        }
-        return Update(entity, message);
-    }
+   
 
     private bool IsDisposed = false;
 
     public void Dispose()
-    { 
+    {
         Dispose(true);
         GC.SuppressFinalize(this);
     }
@@ -233,11 +196,11 @@ namespace F_e_commerce_EFCore.Repository;
     /// <exception cref="NullReferenceException"></exception>
     private IQueryable<TEntity> GetQuery(IQueryable<TEntity> query, string include)
     {
-        if(string.IsNullOrWhiteSpace(include)) throw new NullReferenceException(nameof(include));
+        if (string.IsNullOrWhiteSpace(include)) throw new NullReferenceException(nameof(include));
         var NewArray = include.Split(',', StringSplitOptions.RemoveEmptyEntries);
         foreach (var includes in NewArray)
         {
-          query =  query.Include(includes);
+            query = query.Include(includes);
         }
         return query;
     }
@@ -247,17 +210,6 @@ namespace F_e_commerce_EFCore.Repository;
     /// <param name="entity"></param>
     /// <param name="message"></param>
     /// <returns></returns>
-    private ViewResult Update(TEntity entity, string message)
-    {
-
-        if (!(Context.Entry(entity).State == EntityState.Modified))
-        {
-            Context.Entry(entity).State = EntityState.Modified;
-        }
-        Context.Update(entity);
-        message = string.Format(Messages.UpdatedFromDatabaseMessage, nameof(TEntity));
-        return ViewResult.GetViewResultSucceed(message);
-    }
+ 
 
 }
-

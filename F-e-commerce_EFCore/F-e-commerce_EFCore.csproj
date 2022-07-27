@@ -30,6 +30,8 @@
 
   <ItemGroup>
     <Folder Include="Repository\CategoryRepository\" />
+    <Folder Include="Repository\UserReoistory\" />
+    <Folder Include="Repository\OrderDetailRepository\" />
   </ItemGroup>
 
 </Project>

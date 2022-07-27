@@ -8,12 +8,12 @@ namespace F_e_commerce_UI.Controller
     public class MenuItemController : Microsoft.AspNetCore.Mvc.Controller
     {
         private IWebHostEnvironment hostEnvironment;
-        public MenuItemController(IUnitOfWorkEF unitOfWork , IWebHostEnvironment hostEnvironment) {
+        public MenuItemController(IUnitOfWorkEf unitOfWork , IWebHostEnvironment hostEnvironment) {
             UnitOfWork = unitOfWork;
             this.hostEnvironment = hostEnvironment;
         }
 
-        public IUnitOfWorkEF UnitOfWork { get; set; }
+        public IUnitOfWorkEf UnitOfWork { get; set; }
         [HttpGet]
         public async Task<IActionResult> FetchMenuItem()
         {

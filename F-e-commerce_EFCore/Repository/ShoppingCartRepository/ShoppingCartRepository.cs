@@ -14,42 +14,11 @@ public class ShoppingCartRepository: Repository<ShoppingCart> , IShoppingCartRep
     {
         Context = context;
     }
-
-    public ViewResult Update(ShoppingCart entity)
-    {
-        string message;
-        if (!IsExit(x => x.Id == entity.Id))
-        {
-            message = string.Format(Messages.CantFindDatabaseMessage, nameof(ShoppingCart));
-            return ViewResult.GetViewResultFailed(message);
-        }
-
-        if (!(Context.Entry(entity).State == EntityState.Modified))
-        {
-            Context.Entry(entity).State = EntityState.Modified;
-        }
-        Context.Update(entity);
-        message = string.Format(Messages.UpdatedFromDatabaseMessage, nameof(ShoppingCart));
-        return ViewResult.GetViewResultSucceed(message);
-    }
-
-    public async Task<ViewResult> UpdateAsync(ShoppingCart entity)
-    {
-        string message;
-        if (!await IsExitAsync(x => x.Id == entity.Id))
-        {
-            message = string.Format(Messages.CantFindDatabaseMessage, nameof(ShoppingCart));
-            return ViewResult.GetViewResultFailed(message);
-        }
-        if (!(Context.Entry(entity).State == EntityState.Modified))
-        {
-            Context.Entry(entity).State = EntityState.Modified;
-        }
-        Context.Update(entity);
-        message = string.Format(Messages.UpdatedFromDatabaseMessage, nameof(ShoppingCart));
-        return ViewResult.GetViewResultSucceed(message);
-    }
-
+    /// <summary>
+    /// IncrementCount By One 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>Update Shopping Cart Count By Plus One And With With Result Message</returns>
     public async Task<ViewResult> IncrementCount(int id)
     {
         var entity = await GetByAsync(id);
@@ -60,7 +29,11 @@ public class ShoppingCartRepository: Repository<ShoppingCart> , IShoppingCartRep
         return new ViewResult()
             { Message = string.Format(F_e_Resources.Messages.SucceedMessage, nameof(IncrementCount)), Status = Convert.ToBoolean(1) };
     }
-
+    /// <summary>
+    /// DecrementCount By One 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>Update Shopping Cart Count By Minus One And With With Result Message</returns>
     public async Task<ViewResult> DecrementCount(int id)
     {
         var entity = await GetByAsync(id);

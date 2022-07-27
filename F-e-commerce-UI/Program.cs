@@ -21,7 +21,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddSingleton<IEmailSender, CommonUtility.EmailSender>();
 builder.Services.AddIdentity<ApplicationUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false).AddDefaultTokenProviders()
     .AddEntityFrameworkStores<FECommerceContext>();
-builder.Services.AddTransient<IUnitOfWorkEF, UnitOfWorkEF>();
+builder.Services.AddTransient<IUnitOfWorkEf, UnitOfWorkEf>();
 builder.Services.ConfigureApplicationCookie(op =>
 {
     op.LoginPath = "/Identity/Account/Login";

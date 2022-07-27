@@ -10,12 +10,12 @@ namespace F_e_commerce_UI.Pages.Customer.Cart
     [Authorize]
     public class IndexModel : PageModel
     {
-        public IndexModel(IUnitOfWorkEF unitOfWork)
+        public IndexModel(IUnitOfWorkEf unitOfWork)
         {
             UnitOfWork = unitOfWork;
         }
         public IEnumerable<ShoppingCart> ShoppingCarts { get; set; }
-        public IUnitOfWorkEF UnitOfWork { get; set; }
+        public IUnitOfWorkEf UnitOfWork { get; set; }
         public void OnGet()
         {
             var claimIdentity = (ClaimsIdentity)User.Identity;

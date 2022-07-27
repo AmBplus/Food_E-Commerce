@@ -9,14 +9,14 @@ namespace F_e_commerce_UI.Pages.Admin.Categories
     public class IndexModel : PageModel
     {
         // ctor
-        public IndexModel(IUnitOfWorkEF commerceContext )
+        public IndexModel(IUnitOfWorkEf commerceContext )
         {
             _commerceContext = commerceContext;
         }
         // properties
 
         // Instance Of Database
-        private IUnitOfWorkEF _commerceContext { get; set; }
+        private IUnitOfWorkEf _commerceContext { get; set; }
         // Instance Of Categories Model
         public IEnumerable<Category> _category { get; set; }
         public void OnGet()
