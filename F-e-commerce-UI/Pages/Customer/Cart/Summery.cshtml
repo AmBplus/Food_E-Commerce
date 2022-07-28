@@ -13,7 +13,7 @@
 							<h3 class="text-white-50">Order Summary</h3>
 						</div>
 						<div class="col-6 text-end">
-							<a class="btn btn-outline-info btn-sm">Back to Cart</a>
+							<a asp-page="Index" class="btn btn-outline-info btn-sm">Back to Cart</a>
 						</div>
 					</div>
 				</div>
@@ -27,44 +27,49 @@
 									</h4>
 								</div>
 								<div class="row my-1">
-									<div class="col-3">
-										<label>Name</label>
-									</div>
-									<div class="col-9">
-										<input class="form-control" />
-									</div>
+                                    <div class="col-3">
+                                        <label asp-for="OrderHeader.Name"></label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="OrderHeader.Name" class="form-control" />
+                                    </div>
+                                    <span asp-validation-for="OrderHeader.Name"></span>
 								</div>
 								<div class="row my-1">
 									<div class="col-3">
-										<label>Phone Number</label>
+										<label asp-for="OrderHeader.PhoneNumber"></label>
 									</div>
-									<div class="col-9">
-										<input class="form-control" />
-									</div>
+                                    <div class="col-9">
+                                        <input asp-for="OrderHeader.PhoneNumber" class="form-control" />
+                                    </div>
+                                    <span class="text-danger"  asp-validation-for="OrderHeader.PhoneNumber"></span>
 								</div>
 								<div class="row my-1">
 									<div class="col-3">
-										<label>Pickup Date</label>
+										<label asp-for="OrderHeader.PickUpDate"></label>
 									</div>
-									<div class="col-9">
-										<input type="date" class="form-control" />
-									</div>
+                                    <div class="col-9">
+                                        <input value="" datetime="2022-04-02/2024-04-04" asp-for="OrderHeader.PickUpDate"  type="date" class="form-control" />
+                                    </div>
+                                    <span class="text-danger"  asp-validation-for="OrderHeader.PickUpDate"></span>
+								</div>
+								<div class="row my-1">
+                                    <div class="col-3">
+                                        <label asp-for="OrderHeader.PickUpTime"></label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input value="" type="time" asp-for="OrderHeader.PickUpTime" class="form-control" />
+                                    </div>
+                                    <span class="text-danger"  asp-validation-for="OrderHeader.PickUpTime"></span>
 								</div>
 								<div class="row my-1">
 									<div class="col-3">
-										<label>Pickup Time</label>
+										<label asp-for="OrderHeader.Comment"> </label>
 									</div>
-									<div class="col-9">
-										<input type="time" class="form-control" />
-									</div>
-								</div>
-								<div class="row my-1">
-									<div class="col-3">
-										<label>Additional Instructions: </label>
-									</div>
-									<div class="col-9">
-										<textarea style="height:100px;" class="form-control"></textarea>
-									</div>
+                                    <div class="col-9">
+                                        <textarea asp-for="OrderHeader.Comment" style="height:100px;" class="form-control"></textarea>
+                                    </div>
+                                    <span class="text-danger" asp-validation-for="OrderHeader.Comment"></span>
 								</div>
 							</div>
 
@@ -73,15 +78,18 @@
 									<span class="text-info">Order Summary:</span>
 								</h4>
 								<ul class="list-group mb-3">
-									<li class="list-group-item d-flex justify-content-between">
-										<div>
-											<h6 class="my-0">Name</h6>
-											<small class="text-muted">Quantity: Count</small>
-										</div>
-										<span class="text-muted">$Price * Count</span>
-									</li>
+							@foreach (var shoppingCart in Model.ShoppingCarts)
+							{
+							    <li class="list-group-item d-flex justify-content-between">
+                                    <div>
+                                        <h6 class="my-0">@shoppingCart.MenuItem.Name</h6>
+                                        <small class="text-muted">Quantity: $ @shoppingCart.MenuItem.Price * @shoppingCart.Count</small>
+                                    </div>
+                                    <span class="text-muted"></span>
+                                </li>
+							}
 									<li class="list-group-item d-flex justify-content-between bg-light">
-										<small class="text-info">Total (USD)</small>
+										<small class="text-info">@Model.OrderHeader.OrderTotal</small>
 										<strong class="text-info">$</strong>
 									</li>
 								</ul>
@@ -92,7 +100,7 @@
 				<div class="card-footer">
 					<div class="row">
 						<div class="col-12 col-md-4 offset-md-8">
-							<button type="submit" id="btnPlaceOrder" value="Place Order" class="btn btn-success form-control">Place Order</button>
+							<button type="submit" id="btnPlaceOrder" value="Place Order" class="btn btn-blue form-control">Place Order</button>
 						</div>
 					</div>
 				</div>

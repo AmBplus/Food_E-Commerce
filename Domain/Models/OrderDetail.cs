@@ -17,6 +17,6 @@ public class OrderDetail : BaseModel<int>
     public MenuItem MenuItem { get; set; }
     [Required]
     public decimal Price { get; set; }
-    public int Count { get; set; }
+    public uint Count { get; set; }
 
 }

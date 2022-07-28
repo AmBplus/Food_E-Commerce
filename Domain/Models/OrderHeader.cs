@@ -24,7 +24,7 @@ public class OrderHeader : BaseModel<int>
     public virtual ApplicationUser ApplicationUser { get; set; }
     public DateTime OrderDate { get; set; }
     public string Status { get; set; }
-    public string TransactionId { get; set; }
+   // public string TransactionId { get; set; }
     [Required]
     [DisplayFormat(DataFormatString = "{0:C}")]
     [Display(Name = "Order Total")]
