@@ -7,4 +7,5 @@ namespace F_e_commerce_EFCore.Repository.OrderHeaderRepository;
 
 public interface IOrderHeaderRepository : IRepository<OrderHeader>
 {
+    void UpdateStatus(int id, string status);
 }

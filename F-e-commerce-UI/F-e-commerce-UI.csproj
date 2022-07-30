@@ -50,4 +50,10 @@
     <Folder Include="wwwroot\Images\MenuItem\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Pages\Admin\Order\ManageOrder.cshtml" />
+    <None Include="Pages\Admin\Order\OrderDetails.cshtml" />
+    <None Include="Pages\Admin\Order\OrderList.cshtml" />
+  </ItemGroup>
+
 </Project>

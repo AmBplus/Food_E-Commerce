@@ -29,4 +29,6 @@ public class OrderHeader : BaseModel<int>
     [DisplayFormat(DataFormatString = "{0:C}")]
     [Display(Name = "Order Total")]
     public decimal OrderTotal { get; set; }
+    public string? SessionId { get; set; }
+    public string? PaymentIntentId { get; set; }
 }
