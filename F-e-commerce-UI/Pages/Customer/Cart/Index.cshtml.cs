@@ -1,9 +1,11 @@
 using System.Security.Claims;
+using CommonUtility;
 using Domain.Models;
 using F_e_commerce_EFCore.IUnitOfWorks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
 
 namespace F_e_commerce_UI.Pages.Customer.Cart
 {

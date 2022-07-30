@@ -1,17 +1,21 @@
 using System.Security.Claims;
+using CommonUtility;
 using Domain.Models;
 using F_e_commerce_Constants;
 using F_e_commerce_EFCore.IUnitOfWorks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
+using Stripe;
+using Stripe.Checkout;
 
 namespace F_e_commerce_UI.Pages.Customer.Cart
 {
     [Authorize]
     public class SummeryModel : PageModel
     {
-        public SummeryModel(IUnitOfWorkEf unitOfWorkEf)
+        public SummeryModel(IUnitOfWorkEf unitOfWorkEf, IOptions<StripeSettings> Strips)
         {
             UnitOfWorkEf = unitOfWorkEf;
         }
@@ -19,7 +23,7 @@ namespace F_e_commerce_UI.Pages.Customer.Cart
         [BindProperty]
         public OrderHeader OrderHeader { get; set; }
         private IUnitOfWorkEf UnitOfWorkEf { get; set; }
-        public  async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGet()
         {
             OrderHeader = new OrderHeader();
             var claimesIdentity = (ClaimsIdentity)User.Identity;
@@ -77,15 +81,57 @@ namespace F_e_commerce_UI.Pages.Customer.Cart
                         Price = shopItem.MenuItem.Price,
                         Name = shopItem.MenuItem.Name
                     };
-                     UnitOfWorkEf.OrderDetails.Add(orderDetail);
-                     UnitOfWorkEf.SaveChanges();
+                    UnitOfWorkEf.OrderDetails.Add(orderDetail);
+                    UnitOfWorkEf.SaveChanges();
                 }
+                #region Payment
+
+                var domain = "https://localhost:7018/Customer/Cart";
+                var quantity = ShoppingCarts.ToList().Count;
+                var options = new SessionCreateOptions
+
+                {
+                    LineItems = new List<SessionLineItemOptions>
+                    {
+                        new SessionLineItemOptions
+                        {
+                            // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                         PriceData = new SessionLineItemPriceDataOptions()
+                         {
+                             UnitAmount = (long)OrderHeader.OrderTotal * 100,
+                             Currency = "usd",
+                             ProductData = new SessionLineItemPriceDataProductDataOptions()
+                             {
+                                 Name = "Food ECommerce",
+                                 Description = $"Total Item - {quantity}"
+                             },
+                         },
+                         Quantity = 1
+                        },
+                       
+                    },
+                    PaymentMethodTypes = new List<string>(){"card"}
+                    ,
+                    Mode = "payment",
+                    SuccessUrl = domain + $"/OrderConfirmation?id={OrderHeader.Id}",
+                    CancelUrl = domain + "/CancelOrder",
+                };
 
                 UnitOfWorkEf.ShoppingCarts.RemoveRange(ShoppingCarts);
                 UnitOfWorkEf.SaveChanges();
-                return RedirectToPage("index");
-            }
 
+                var service = new SessionService();
+                Session session = service.Create(options);
+                Response.Headers.Add("Location", session.Url);
+
+                //OrderHeader.SessionId = session.Id;
+                //OrderHeader.PaymentIntentId = session.PaymentIntentId;
+                UnitOfWorkEf.SaveChangesAsync();
+                return new StatusCodeResult(303);
+
+                #endregion
+
+            }
             return Page();
 
         }

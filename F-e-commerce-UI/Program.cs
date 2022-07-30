@@ -1,3 +1,4 @@
+using CommonUtility;
 using Domain.Models;
 using F_e_commerce_EFCore;
 using F_e_commerce_EFCore.IUnitOfWorks;
@@ -7,6 +8,8 @@ using F_e_commerce_EFCore.UnitOfWorks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Stripe;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +22,9 @@ builder.Services.AddDbContext<FECommerceContext>
     b => b.MigrationsAssembly("F-e-commerce_EFCore")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddSingleton<IEmailSender, CommonUtility.EmailSender>();
+var stripSettings = new StripeSettings();
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Payment"));
+builder.Configuration.GetSection("Payment").Bind(stripSettings);
 builder.Services.AddIdentity<ApplicationUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false).AddDefaultTokenProviders()
     .AddEntityFrameworkStores<FECommerceContext>();
 builder.Services.AddTransient<IUnitOfWorkEf, UnitOfWorkEf>();
@@ -29,6 +35,12 @@ builder.Services.ConfigureApplicationCookie(op =>
     op.LogoutPath = "/Identity/Account/AccessDenied";
 
 });
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(100);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,7 +50,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+StripeConfiguration.ApiKey = stripSettings.Secret;
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
