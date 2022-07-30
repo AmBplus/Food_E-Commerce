@@ -57,6 +57,8 @@ namespace F_e_commerce_UI.Pages.Customer.Cart
             var claims = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             if (claims != null)
             {
+                #region RegisterByOrderClaim
+
                 var userId = claims.Value;
                 ShoppingCarts = await UnitOfWorkEf.ShoppingCarts.GetByFilterAsync(filter: x => x.UserId == userId
                     , include: $"{nameof(MenuItem)},{nameof(MenuItem)}.{nameof(FoodType)},{nameof(MenuItem)}.{nameof(Category)}");
@@ -71,6 +73,8 @@ namespace F_e_commerce_UI.Pages.Customer.Cart
                 OrderHeader.OrderDate = DateTime.Now;
                 UnitOfWorkEf.OrderHeader.Add(OrderHeader);
                 UnitOfWorkEf.SaveChanges();
+
+                #endregion
                 foreach (var shopItem in ShoppingCarts)
                 {
                     var orderDetail = new OrderDetail()
@@ -85,37 +89,35 @@ namespace F_e_commerce_UI.Pages.Customer.Cart
                     UnitOfWorkEf.SaveChanges();
                 }
                 #region Payment
-
                 var domain = "https://localhost:7018/Customer/Cart";
                 var quantity = ShoppingCarts.ToList().Count;
                 var options = new SessionCreateOptions
-
                 {
-                    LineItems = new List<SessionLineItemOptions>
-                    {
-                        new SessionLineItemOptions
-                        {
-                            // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                         PriceData = new SessionLineItemPriceDataOptions()
-                         {
-                             UnitAmount = (long)OrderHeader.OrderTotal * 100,
-                             Currency = "usd",
-                             ProductData = new SessionLineItemPriceDataProductDataOptions()
-                             {
-                                 Name = "Food ECommerce",
-                                 Description = $"Total Item - {quantity}"
-                             },
-                         },
-                         Quantity = 1
-                        },
-                       
-                    },
+                    LineItems = new List<SessionLineItemOptions>(),
                     PaymentMethodTypes = new List<string>(){"card"}
                     ,
                     Mode = "payment",
                     SuccessUrl = domain + $"/OrderConfirmation?id={OrderHeader.Id}",
                     CancelUrl = domain + "/CancelOrder",
                 };
+                foreach (var item in ShoppingCarts)
+                {
+                    var sessionLineItem = new SessionLineItemOptions
+                    {
+                        // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                        PriceData = new SessionLineItemPriceDataOptions()
+                        {
+                            UnitAmount = (long)item.MenuItem.Price * 100,
+                            Currency = "usd",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions()
+                            {
+                                Name = item.MenuItem.Name
+                            },
+                        },
+                        Quantity = item.Count
+                    };
+                    options.LineItems.Add(sessionLineItem);
+                }
 
                 UnitOfWorkEf.ShoppingCarts.RemoveRange(ShoppingCarts);
                 UnitOfWorkEf.SaveChanges();
