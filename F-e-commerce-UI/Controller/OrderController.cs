@@ -18,34 +18,34 @@ namespace F_e_commerce_UI.Controller
 
         [HttpGet]
       //  [Authorize]
-        public async Task<IActionResult> GetAllOrderHeader()
+        public async Task<IActionResult> GetAllOrderHeader(string ? status)
         {
 
-            var OrderHeaderList = _unitOfWork.OrderHeader.GetAll();
-            var list = OrderHeaderList.ToList();
+            var OrderHeaderList =await _unitOfWork.OrderHeader.GetAllAsync(include: nameof(ApplicationUser));
 
-            //if(status== "cancelled")
-            //{
-            //    OrderHeaderList = OrderHeaderList.Where(u => u.Status == StatusMessages.StatusCancelled || u.Status == StatusMessages.StatusRejected);
-            //}
-            //else
-            //{
-            //    if (status == "completed")
-            //    {
-            //        OrderHeaderList = OrderHeaderList.Where(u => u.Status == StatusMessages.StatusCompleted );
-            //    }
-            //    else
-            //    {
-            //        if (status == "ready")
-            //        {
-            //            OrderHeaderList = OrderHeaderList.Where(u => u.Status == StatusMessages.StatusReady);
-            //        }
-            //        else
-            //        {
-            //            OrderHeaderList = OrderHeaderList.Where(u => u.Status == StatusMessages.StatusSubmitted || u.Status == StatusMessages.StatusInProcess);
-            //        }
-            //    }
-            //}
+
+            if (status == "cancelled")
+            {
+                OrderHeaderList = OrderHeaderList.Where(u => u.Status == StatusMessages.StatusCancelled || u.Status == StatusMessages.StatusRejected);
+            }
+            else
+            {
+                if (status == "completed")
+                {
+                    OrderHeaderList = OrderHeaderList.Where(u => u.Status == StatusMessages.StatusCompleted);
+                }
+                else
+                {
+                    if (status == "ready")
+                    {
+                        OrderHeaderList = OrderHeaderList.Where(u => u.Status == StatusMessages.StatusReady);
+                    }
+                    else
+                    {
+                        OrderHeaderList = OrderHeaderList.Where(u => u.Status == StatusMessages.StatusSubmitted || u.Status == StatusMessages.StatusInProcess);
+                    }
+                }
+            }
 
             return Json(new { data = OrderHeaderList });
         }

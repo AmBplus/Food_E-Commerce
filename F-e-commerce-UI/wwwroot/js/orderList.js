@@ -23,7 +23,7 @@ $(document).ready(function () {
 function loadList(param) {
     dataTable = $('#DT_load').DataTable({
         "ajax": {
-            "url": "/api/order?status=" + param,
+            "url": "/api/Order/GetAllOrderHeader?status=" + param,
             "type": "GET",
             "datatype": "json"
         },

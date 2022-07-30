@@ -125,9 +125,8 @@ namespace F_e_commerce_UI.Pages.Customer.Cart
                 var service = new SessionService();
                 Session session = service.Create(options);
                 Response.Headers.Add("Location", session.Url);
-
-                //OrderHeader.SessionId = session.Id;
-                //OrderHeader.PaymentIntentId = session.PaymentIntentId;
+                OrderHeader.SessionId = session.Id;
+                OrderHeader.PaymentIntentId = session.PaymentIntentId;
                 UnitOfWorkEf.SaveChangesAsync();
                 return new StatusCodeResult(303);
 
