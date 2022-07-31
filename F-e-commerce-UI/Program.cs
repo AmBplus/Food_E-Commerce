@@ -35,6 +35,7 @@ builder.Services.ConfigureApplicationCookie(op =>
     op.LogoutPath = "/Identity/Account/AccessDenied";
 
 });
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(100);
@@ -58,7 +59,7 @@ app.UseRouting();
 app.UseAuthentication();;
 
 app.UseAuthorization();
-
+app.UseSession();
 app.MapRazorPages();
 app.MapControllers();
 app.Run();

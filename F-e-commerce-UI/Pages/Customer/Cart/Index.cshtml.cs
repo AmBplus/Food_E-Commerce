@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using CommonUtility;
 using Domain.Models;
+using F_e_commerce_Constants;
 using F_e_commerce_EFCore.IUnitOfWorks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -42,11 +43,14 @@ namespace F_e_commerce_UI.Pages.Customer.Cart
             return RedirectToPage();
         }
         
-        public async Task<IActionResult> OnPostRemoveAsync(int id)
+        public  IActionResult OnPostRemoveAsync(int id)
         {
-            var entity = await UnitOfWork.ShoppingCarts.GetByAsync(id);
-             UnitOfWork.ShoppingCarts.Remove(entity);
-            await UnitOfWork.SaveChangesAsync();
+            var entity =  UnitOfWork.ShoppingCarts.GetBy(id);
+            UnitOfWork.ShoppingCarts.Remove(entity);
+            var cart = UnitOfWork.ShoppingCarts.GetBy(x => x.Id == id);
+            var count = UnitOfWork.ShoppingCarts.GetByFilter(x => x.UserId == cart.UserId).ToList().Count;
+            HttpContext.Session.SetInt32(StatusMessages.StatusSessionCart, count-1);
+            UnitOfWork.SaveChanges();
             return RedirectToPage();
         }
     }

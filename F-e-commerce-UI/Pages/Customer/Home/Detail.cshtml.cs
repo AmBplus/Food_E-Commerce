@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using Domain.Models;
+using F_e_commerce_Constants;
 using F_e_commerce_EFCore.IUnitOfWorks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -43,24 +44,26 @@ namespace F_e_commerce_UI.Pages.Customer.Home
 
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public  IActionResult OnPostAsync()
         {
             if (ModelState.IsValid)
             {
                 var findShoppingCart =
-                    await UnitOfWork.ShoppingCarts.GetByAsync(filter:x => x.UserId == ShoppingCart.UserId && x.MenuItemId == ShoppingCart.MenuItemId);
+                   UnitOfWork.ShoppingCarts.GetBy(filter:x => x.UserId == ShoppingCart.UserId && x.MenuItemId == ShoppingCart.MenuItemId);
                 if (findShoppingCart == null)
                 {
-                    await UnitOfWork.ShoppingCarts.AddAsync(ShoppingCart);
-                    await UnitOfWork.SaveChangesAsync();
+                     UnitOfWork.ShoppingCarts.Add(ShoppingCart);
+                     UnitOfWork.SaveChanges();
+                    var count =  UnitOfWork.ShoppingCarts.GetByFilter(x => x.UserId == ShoppingCart.UserId).ToList().Count;
+                    HttpContext.Session.SetInt32(StatusMessages.StatusSessionCart, count);
                 }
                 else
                 {
                     findShoppingCart.Count = ShoppingCart.Count;
-                    await UnitOfWork.ShoppingCarts.UpdateAsync(findShoppingCart);
-                    await UnitOfWork.SaveChangesAsync();
+                    UnitOfWork.ShoppingCarts.Update(findShoppingCart);
+                    UnitOfWork.SaveChangesAsync();
                 }
-                
+           
             }
             return RedirectToPage("index");
         }

@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using F_e_commerce_Constants
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,9 +42,23 @@
                                 <a class="dropdown-item" asp-page="@PageAddress.MenuItemManagement">@PageWords.MenuItemManagement</a>
                             </div>
                         </li>
-                        <li class="nav-link ">
-                            <a class="link-light" asp-page="/Customer/Cart/Index"> <i class="bi bi-cart4"></i></a>
-                        </li>
+                        @{
+                        var cartCount = Context.Session.GetInt32(StatusMessages.StatusSessionCart).ToString();
+                        if((!string.IsNullOrWhiteSpace(cartCount)))
+                        {
+                            <li class="nav-link position-relative">
+                                <a class="link-light" asp-page="/Customer/Cart/Index"> <i class="bi bi-cart4"></i><span class="bg-white rounded-1 position-absolute top-50 text-danger px-1">@(cartCount)</span></a>
+                            </li> 
+                        }
+                        else
+                        {
+                            <li class="nav-link position-relative">
+                                <a class="link-light" asp-page="/Customer/Cart/Index"> <i class="bi bi-cart4"></i><span class="bg-white rounded-1 position-absolute top-50 text-danger px-1">0</span></a>
+                            </li> 
+                        }
+                            
+                        }
+                     
                     </ul>
                  <partial name="_LoginPartial"/>
                 </div>
