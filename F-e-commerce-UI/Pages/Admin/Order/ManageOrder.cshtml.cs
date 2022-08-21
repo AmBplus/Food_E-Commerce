@@ -22,15 +22,16 @@ namespace F_e_commerce_UI.Pages.Admin.Order
         {
             OrderDetailVM = new();
 
-            List<OrderHeader> orderHeaders = (await _unitOfWork.OrderHeader.GetByFilterAsync(filter:u => u.Status == StatusMessages.StatusSubmitted ||
-            u.Status == StatusMessages.StatusInProcess)).ToList();
+            //List<OrderHeader> orderHeaders = (await _unitOfWork.OrderHeader.GetByFilterAsync(filter:u => u.Status == StatusMessages.StatusPending || u.Status == StatusMessages.StatusSubmitted ||
+            //u.Status == StatusMessages.StatusInProcess)).ToList();
+            List<OrderHeader> orderHeaders = (await _unitOfWork.OrderHeader.GetAllAsync()).ToList();
 
-            foreach(OrderHeader item in orderHeaders)
+            foreach (OrderHeader item in orderHeaders)
             {
                 OrderDetailVM individual = new OrderDetailVM()
                 {
                     OrderHeader = item,
-                  //  OrderDetails =( await _unitOfWork.OrderDetails.GetByFilterAsync(filter:u => u.OrderId == item.Id))
+                   OrderDetails =( await _unitOfWork.OrderDetails.GetByFilterAsync(filter:u => u.OrderId == item.Id)).ToList()
                 };
                 OrderDetailVM.Add(individual);
             }
@@ -58,3 +59,4 @@ namespace F_e_commerce_UI.Pages.Admin.Order
         }
     }
 }
+ 

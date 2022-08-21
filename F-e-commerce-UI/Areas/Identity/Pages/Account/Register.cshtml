@@ -46,10 +46,14 @@
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-floating mb-2">
-                <input type="radio" name="rdUserRole" value="@Roles.MangerRole"/>@Roles.MangerRole
-                <input type="radio" name="rdUserRole" value="@Roles.CustomerRole"/>@Roles.CustomerRole
-                <input type="radio" name="rdUserRole" value="@Roles.FrontKitchenRole"/>@Roles.FrontKitchenRole
-                <input type="radio" name="rdUserRole" value="@Roles.KitchenRole"/>@Roles.KitchenRole
+                @if (User.IsInRole(Roles.MangerRole))
+                {
+                    <input type="radio" name="rdUserRole" value="@Roles.MangerRole"/>@Roles.MangerRole
+                    <input type="radio" name="rdUserRole" value="@Roles.FrontKitchenRole"/>@Roles.FrontKitchenRole
+                    <input type="radio" name="rdUserRole" value="@Roles.KitchenRole"/>@Roles.KitchenRole
+                }
+                <input type="radio" checked name="rdUserRole" value="@Roles.CustomerRole"/>@Roles.CustomerRole
+               
             </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>

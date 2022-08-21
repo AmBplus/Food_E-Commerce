@@ -27,21 +27,29 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-page="@PageAddress.Home">@PageWords.Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Admin/Order/OrderList">OrderList</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-page="/Admin/Order/ManageOrder">ManageOrder</a>
-                        </li>
+                   @if (User.IsInRole(Roles.MangerRole) || User.IsInRole(Roles.FrontDeskRole)|| User.IsInRole(Roles.KitchenRole))
+                   {
+                       <li class="nav-item">
+                           <a class="nav-link text-light" asp-area="" asp-page="/Admin/Order/OrderList">OrderList</a>
+                       </li>
+                   }
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-page="@PageAddress.AdminCategoryMain">@PageWords.CategoryManagement</a>
-                                <a class="dropdown-item" asp-page="@PageAddress.AdminFoodMain">@PageWords.FoodManagement</a>
-                                <a class="dropdown-item" asp-page="@PageAddress.MenuItemManagement">@PageWords.MenuItemManagement</a>
-                            </div>
-                        </li>
+                   @{
+                            if (User.IsInRole(Roles.MangerRole))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-page="/Admin/Order/ManageOrder">ManageOrder</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" asp-page="@PageAddress.AdminCategoryMain">@PageWords.CategoryManagement</a>
+                                        <a class="dropdown-item" asp-page="@PageAddress.AdminFoodMain">@PageWords.FoodManagement</a>
+                                        <a class="dropdown-item" asp-page="@PageAddress.MenuItemManagement">@PageWords.MenuItemManagement</a>
+                                    </div>
+                                </li>
+                            }
+                        }
                         @{
                         var cartCount = Context.Session.GetInt32(StatusMessages.StatusSessionCart).ToString();
                         if((!string.IsNullOrWhiteSpace(cartCount)))

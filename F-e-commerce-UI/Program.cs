@@ -21,7 +21,7 @@ builder.Services.AddDbContext<FECommerceContext>
 (op => op.UseSqlServer(connection, 
     b => b.MigrationsAssembly("F-e-commerce_EFCore")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddSingleton<IEmailSender, CommonUtility.EmailSender>();
+builder.Services.AddSingleton<IEmailSender>(new EmailSender(465, "smtp.gmail.com"));
 var stripSettings = new StripeSettings();
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Payment"));
 builder.Configuration.GetSection("Payment").Bind(stripSettings);
@@ -42,6 +42,9 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+//int port = builder.Configuration.GetValue<int>(key: "Email:port");
+//string? emailServer = builder.Configuration.GetSection("Email")["SmtpServer"]; 
+// builder.Services.AddTransient<IEmailSender>(x => new EmailSender(port, emailServer));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
